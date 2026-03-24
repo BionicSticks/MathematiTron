@@ -43,7 +43,7 @@ MathematiTron is not a content platform — it's an AI tutor. There's no pre-bui
 
 1. Clone the repo:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/MathematiTron.git
+   git clone https://github.com/BionicSticks/MathematiTron.git
    cd MathematiTron
    ```
 
