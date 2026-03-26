@@ -4,7 +4,8 @@ import { apiFetch } from '../lib/api';
 import { AppShell } from '../components/layout/AppShell';
 import { Link } from 'wouter';
 import type { DashboardStats } from '../../types/api';
-import { Flame, BookOpen, TrendingUp, Clock, ArrowRight, Map } from 'lucide-react';
+import { Flame, BookOpen, Clock, ArrowRight, Map } from 'lucide-react';
+import { MasteryRing } from '../components/progress/MasteryRing';
 
 export function DashboardPage() {
   const { profile } = useAuth();
@@ -44,11 +45,13 @@ export function DashboardPage() {
               label="Concepts Mastered"
               value={`${stats.masteredConcepts} / ${stats.totalConcepts}`}
             />
-            <StatCard
-              icon={<TrendingUp className="h-5 w-5 text-green-500" />}
-              label="Overall Mastery"
-              value={`${stats.overallMastery}%`}
-            />
+            <div className="rounded-xl border border-border bg-card p-4 flex items-center gap-4">
+              <MasteryRing value={stats.overallMastery} size={56} strokeWidth={5} />
+              <div>
+                <span className="text-sm text-muted-foreground">Overall Mastery</span>
+                <p className="text-xl font-bold">{stats.overallMastery}%</p>
+              </div>
+            </div>
             <StatCard
               icon={<Clock className="h-5 w-5 text-purple-500" />}
               label="Time This Week"
