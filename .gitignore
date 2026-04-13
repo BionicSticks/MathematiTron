@@ -13,6 +13,10 @@ dist-ssr
 *.local
 .env
 
+# Planning & design docs
+PLAN.md
+DESIGN*.md
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
