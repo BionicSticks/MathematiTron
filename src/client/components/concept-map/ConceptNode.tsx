@@ -13,38 +13,38 @@ export interface ConceptNodeData {
 const statusConfig = {
   mastered: {
     icon: CheckCircle,
-    color: 'text-green-500',
-    bgColor: 'bg-green-500/10',
-    borderColor: 'border-green-500/60',
-    barColor: 'bg-green-500',
+    color: 'text-primary',
+    bgColor: 'bg-primary/10',
+    barColor: 'bg-primary',
+    nodeBg: 'bg-card',
   },
   'in-progress': {
     icon: Circle,
-    color: 'text-blue-500',
-    bgColor: 'bg-blue-500/10',
-    borderColor: 'border-blue-500/60',
-    barColor: 'bg-blue-500',
+    color: 'text-secondary',
+    bgColor: 'bg-secondary/10',
+    barColor: 'bg-secondary',
+    nodeBg: 'bg-card',
   },
   started: {
     icon: Circle,
-    color: 'text-amber-500',
-    bgColor: 'bg-amber-500/10',
-    borderColor: 'border-amber-500/60',
+    color: 'text-amber-600',
+    bgColor: 'bg-amber-50',
     barColor: 'bg-amber-500',
+    nodeBg: 'bg-card',
   },
   available: {
     icon: Circle,
     color: 'text-muted-foreground',
-    bgColor: 'bg-muted',
-    borderColor: 'border-border',
+    bgColor: 'surface-low',
     barColor: 'bg-muted-foreground',
+    nodeBg: 'bg-card',
   },
   locked: {
     icon: Lock,
-    color: 'text-muted-foreground/50',
-    bgColor: 'bg-muted/50',
-    borderColor: 'border-border/50',
+    color: 'text-muted-foreground/60',
+    bgColor: 'surface-low',
     barColor: 'bg-muted',
+    nodeBg: 'surface-low',
   },
 } as const;
 
@@ -67,19 +67,19 @@ function ConceptNodeInner({ data }: NodeProps<ConceptNodeData>) {
       <Handle type="target" position={Position.Top} className="!bg-transparent !border-0 !w-3 !h-3" />
       <div
         className={`
-          px-4 py-3 rounded-lg border-2 bg-background shadow-sm
-          min-w-[200px] max-w-[240px] transition-shadow
-          ${config.borderColor}
-          ${status !== 'locked' ? 'cursor-pointer hover:shadow-md' : 'opacity-60'}
+          px-4 py-3 rounded-xl shadow-ambient
+          min-w-[200px] max-w-[240px] transition-all
+          ${config.nodeBg}
+          ${status !== 'locked' ? 'cursor-pointer hover:shadow-lg' : 'opacity-50'}
         `}
       >
         <div className="flex items-start gap-2 mb-1.5">
-          <div className={`h-6 w-6 rounded flex items-center justify-center flex-shrink-0 ${config.bgColor}`}>
+          <div className={`h-6 w-6 rounded-lg flex items-center justify-center flex-shrink-0 ${config.bgColor}`}>
             <StatusIcon className={`h-3.5 w-3.5 ${config.color}`} />
           </div>
           <div className="flex-1 min-w-0">
             <div className="font-medium text-sm leading-tight truncate">{concept.name}</div>
-            <span className="text-[10px] text-muted-foreground uppercase tracking-wide">
+            <span className="text-[11px] text-muted-foreground uppercase tracking-wider">
               {concept.category.replace(/-/g, ' ')}
             </span>
           </div>
@@ -87,11 +87,11 @@ function ConceptNodeInner({ data }: NodeProps<ConceptNodeData>) {
 
         {status !== 'available' && status !== 'locked' && (
           <div className="mt-2">
-            <div className="flex items-center justify-between text-[10px] mb-0.5">
+            <div className="flex items-center justify-between text-[11px] mb-0.5">
               <span className="text-muted-foreground">Mastery</span>
               <span className="font-medium">{Math.round(mastery)}%</span>
             </div>
-            <div className="h-1 rounded-full bg-muted overflow-hidden">
+            <div className="h-1.5 rounded-full surface-mid overflow-hidden">
               <div
                 className={`h-full rounded-full transition-all ${config.barColor}`}
                 style={{ width: `${mastery}%` }}

@@ -8,6 +8,7 @@ import {
   getMessages,
   saveMessage,
 } from '../db/queries/conversations';
+import { streamTutorResponse } from '../services/ai/tutor';
 
 const router = Router();
 
@@ -59,8 +60,7 @@ router.patch('/:id', requireAuth, async (req, res) => {
   res.json(updated);
 });
 
-// Send message and get AI response (SSE streaming)
-// This is a placeholder - the full AI integration comes in Phase 3
+// Send message and stream AI response via SSE
 router.post('/:id/messages', requireAuth, async (req, res) => {
   const conversation = await getConversation(req.params.id as string, req.userId!);
   if (!conversation) {
@@ -77,11 +77,18 @@ router.post('/:id/messages', requireAuth, async (req, res) => {
     conversation_id: conversation.id,
     role: 'user',
     content: content.trim(),
+    concept_id: conversation.primary_concept_id ?? undefined,
   });
 
-  // TODO: Phase 3 - Stream AI response via SSE
-  // For now, return the saved message
-  res.status(201).json(userMessage);
+  // Set SSE headers
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+  res.setHeader('X-Accel-Buffering', 'no');
+  res.flushHeaders();
+
+  // Stream AI response
+  await streamTutorResponse(res, conversation, userMessage);
 });
 
 export default router;

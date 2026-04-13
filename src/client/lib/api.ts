@@ -27,6 +27,7 @@ export async function apiFetch<T>(path: string, options?: RequestInit): Promise<
 }
 
 // SSE streaming helper for chat
+// Server sends: event: <type>\ndata: <json>\n\n
 export function apiStream(
   path: string,
   body: unknown,
@@ -72,20 +73,28 @@ export function apiStream(
       const lines = buffer.split('\n');
       buffer = lines.pop() ?? '';
 
+      let currentEvent = '';
       for (const line of lines) {
-        if (line.startsWith('data: ')) {
+        if (line.startsWith('event: ')) {
+          currentEvent = line.slice(7).trim();
+        } else if (line.startsWith('data: ')) {
           try {
-            const event = JSON.parse(line.slice(6));
-            if (event.type === 'delta' && event.text) {
-              onDelta(event.text);
-            } else if (event.type === 'done') {
-              onDone(event.message_id);
-            } else if (event.type === 'error') {
-              onError(event.error);
+            const data = JSON.parse(line.slice(6));
+            switch (currentEvent) {
+              case 'delta':
+                if (data.text) onDelta(data.text);
+                break;
+              case 'done':
+                onDone(data.message_id ?? '');
+                break;
+              case 'error':
+                onError(data.error ?? 'Unknown error');
+                break;
             }
           } catch {
             // Skip malformed events
           }
+          currentEvent = '';
         }
       }
     }

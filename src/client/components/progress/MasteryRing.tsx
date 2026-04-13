@@ -13,8 +13,8 @@ export function MasteryRing({ value, size = 80, strokeWidth = 6, label }: Master
   const offset = circumference - (Math.min(value, 100) / 100) * circumference;
 
   const getColor = (v: number) => {
-    if (v >= 80) return 'text-green-500';
-    if (v >= 50) return 'text-blue-500';
+    if (v >= 80) return 'text-primary';
+    if (v >= 50) return 'text-secondary';
     if (v > 0) return 'text-amber-500';
     return 'text-muted-foreground';
   };
@@ -31,7 +31,7 @@ export function MasteryRing({ value, size = 80, strokeWidth = 6, label }: Master
             fill="none"
             stroke="currentColor"
             strokeWidth={strokeWidth}
-            className="text-muted"
+            style={{ color: '#eae7dc' }}
           />
           {/* Progress ring */}
           <motion.circle
@@ -40,7 +40,7 @@ export function MasteryRing({ value, size = 80, strokeWidth = 6, label }: Master
             r={radius}
             fill="none"
             stroke="currentColor"
-            strokeWidth={strokeWidth}
+            strokeWidth={strokeWidth + 1}
             strokeLinecap="round"
             className={getColor(value)}
             strokeDasharray={circumference}

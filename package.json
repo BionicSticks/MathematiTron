@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "tsx src/server/index.ts",
+    "dev": "tsx --env-file=.env.local src/server/index.ts",
     "build": "vite build && esbuild src/server/index.ts --bundle --platform=node --format=esm --outdir=dist --packages=external",
     "start": "NODE_ENV=production node dist/index.js",
     "check": "tsc --noEmit",

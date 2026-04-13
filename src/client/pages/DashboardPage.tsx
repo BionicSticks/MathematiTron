@@ -19,18 +19,18 @@ export function DashboardPage() {
 
   return (
     <AppShell>
-      <div className="space-y-8">
+      <div className="space-y-10">
         {/* Header */}
         <div>
-          <h1 className="text-2xl font-bold">Welcome back, {firstName}</h1>
-          <p className="text-muted-foreground">Pick up where you left off</p>
+          <h1 className="text-3xl font-bold">Welcome back, {firstName}</h1>
+          <p className="text-muted-foreground mt-1">Pick up where you left off</p>
         </div>
 
         {/* Stats Grid */}
         {isLoading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[1, 2, 3, 4].map(i => (
-              <div key={i} className="h-24 rounded-xl border border-border bg-card animate-pulse" />
+              <div key={i} className="h-24 rounded-2xl surface-low animate-pulse" />
             ))}
           </div>
         ) : stats ? (
@@ -41,11 +41,11 @@ export function DashboardPage() {
               value={`${stats.currentStreak} day${stats.currentStreak !== 1 ? 's' : ''}`}
             />
             <StatCard
-              icon={<BookOpen className="h-5 w-5 text-blue-500" />}
+              icon={<BookOpen className="h-5 w-5 text-secondary" />}
               label="Concepts Mastered"
               value={`${stats.masteredConcepts} / ${stats.totalConcepts}`}
             />
-            <div className="rounded-xl border border-border bg-card p-4 flex items-center gap-4">
+            <div className="rounded-2xl bg-card shadow-ambient p-5 flex items-center gap-4">
               <MasteryRing value={stats.overallMastery} size={56} strokeWidth={5} />
               <div>
                 <span className="text-sm text-muted-foreground">Overall Mastery</span>
@@ -67,9 +67,9 @@ export function DashboardPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {stats.suggestedConcepts.map(concept => (
                 <Link key={concept.id} href={`/chat?concept=${concept.id}`}>
-                  <div className="group rounded-xl border border-border bg-card p-4 hover:border-primary/50 hover:shadow-sm transition-all cursor-pointer">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                  <div className="group rounded-2xl bg-card shadow-ambient p-5 hover:shadow-lg transition-all cursor-pointer">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                         {concept.category.replace('-', ' ')}
                       </span>
                       <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
@@ -77,12 +77,12 @@ export function DashboardPage() {
                     <h3 className="font-semibold mb-1">{concept.name}</h3>
                     <p className="text-sm text-muted-foreground line-clamp-2">{concept.description}</p>
                     {concept.mastery && (
-                      <div className="mt-3">
-                        <div className="flex items-center justify-between text-xs mb-1">
+                      <div className="mt-4">
+                        <div className="flex items-center justify-between text-xs mb-1.5">
                           <span className="text-muted-foreground">Mastery</span>
                           <span className="font-medium">{Math.round(concept.mastery.mastery_level)}%</span>
                         </div>
-                        <div className="h-1.5 rounded-full bg-muted overflow-hidden">
+                        <div className="h-1.5 rounded-full surface-mid overflow-hidden">
                           <div
                             className="h-full rounded-full bg-primary transition-all"
                             style={{ width: `${concept.mastery.mastery_level}%` }}
@@ -102,12 +102,12 @@ export function DashboardPage() {
           <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
           <div className="flex flex-wrap gap-3">
             <Link href="/chat">
-              <button className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors">
+              <button className="flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground hover:brightness-110 transition-all glow-primary">
                 Start a Tutoring Session
               </button>
             </Link>
             <Link href="/map">
-              <button className="flex items-center gap-2 rounded-lg border border-border px-4 py-2 text-sm font-medium hover:bg-muted transition-colors">
+              <button className="flex items-center gap-2 rounded-full surface-low px-6 py-2.5 text-sm font-medium hover:surface-mid transition-colors">
                 <Map className="h-4 w-4" />
                 View Concept Map
               </button>
@@ -121,7 +121,7 @@ export function DashboardPage() {
 
 function StatCard({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-border bg-card p-4">
+    <div className="rounded-2xl bg-card shadow-ambient p-5">
       <div className="flex items-center gap-2 mb-2">
         {icon}
         <span className="text-sm text-muted-foreground">{label}</span>

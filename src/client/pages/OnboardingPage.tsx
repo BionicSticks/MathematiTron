@@ -59,20 +59,20 @@ export function OnboardingPage() {
           <Calculator className="h-8 w-8 text-primary" />
           <h1 className="text-2xl font-bold">Let's get started</h1>
         </div>
-        <p className="text-muted-foreground mb-8">
+        <p className="text-muted-foreground mb-10">
           What would you like to achieve? This helps your AI tutor create a personalised learning path.
         </p>
 
         {/* Goal selection */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
           {goalOptions.map(({ type, label, desc, icon: Icon }) => (
             <button
               key={type}
               onClick={() => setSelectedGoal(type)}
-              className={`flex items-start gap-3 rounded-xl border p-4 text-left transition-all ${
+              className={`flex items-start gap-3 rounded-xl p-4 text-left transition-all ${
                 selectedGoal === type
-                  ? 'border-primary bg-primary/5 ring-1 ring-primary'
-                  : 'border-border hover:border-primary/50'
+                  ? 'bg-card shadow-ambient glow-primary'
+                  : 'surface-low hover:bg-card hover:shadow-ambient'
               }`}
             >
               <Icon className={`h-5 w-5 mt-0.5 ${selectedGoal === type ? 'text-primary' : 'text-muted-foreground'}`} />
@@ -86,12 +86,12 @@ export function OnboardingPage() {
 
         {/* Custom description */}
         {selectedGoal === 'custom' && (
-          <div className="mb-6">
-            <label className="block text-sm font-medium mb-1.5">Describe your goal</label>
+          <div className="mb-8">
+            <label className="block text-xs font-semibold mb-2 text-muted-foreground uppercase tracking-wider">Describe your goal</label>
             <textarea
               value={customDescription}
               onChange={e => setCustomDescription(e.target.value)}
-              className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 min-h-[80px]"
+              className="w-full rounded-xl surface-low px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 min-h-[80px] transition-shadow"
               placeholder="e.g., I want to learn enough linear algebra to understand machine learning papers"
             />
           </div>
@@ -99,15 +99,15 @@ export function OnboardingPage() {
 
         {/* Target date */}
         {selectedGoal && (
-          <div className="mb-8">
-            <label className="block text-sm font-medium mb-1.5">
-              Target date <span className="text-muted-foreground font-normal">(optional)</span>
+          <div className="mb-10">
+            <label className="block text-xs font-semibold mb-2 text-muted-foreground uppercase tracking-wider">
+              Target date <span className="font-normal">(optional)</span>
             </label>
             <input
               type="date"
               value={targetDate}
               onChange={e => setTargetDate(e.target.value)}
-              className="rounded-lg border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="rounded-xl surface-low px-4 py-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-shadow"
               min={new Date().toISOString().split('T')[0]}
             />
           </div>
@@ -117,7 +117,7 @@ export function OnboardingPage() {
         <button
           onClick={handleSubmit}
           disabled={!selectedGoal || isSubmitting}
-          className="flex items-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
+          className="flex items-center gap-2 rounded-full bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground hover:brightness-110 disabled:opacity-50 transition-all glow-primary"
         >
           {isSubmitting ? 'Setting up...' : 'Continue'}
           {!isSubmitting && <ArrowRight className="h-4 w-4" />}

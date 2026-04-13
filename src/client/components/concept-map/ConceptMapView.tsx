@@ -25,7 +25,6 @@ function buildLayout(data: ConceptMapData) {
   const horizontalSpacing = 340;
   const verticalSpacing = 110;
 
-  // Group concepts by category, preserving display_order within each
   const categoryGroups = new Map<string, ConceptWithMastery[]>();
   for (const concept of data.concepts) {
     const group = categoryGroups.get(concept.category) ?? [];
@@ -33,13 +32,11 @@ function buildLayout(data: ConceptMapData) {
     categoryGroups.set(concept.category, group);
   }
 
-  // Use the category order from the API (which matches curriculum progression)
   const orderedCategories = data.categories.filter(c => categoryGroups.has(c));
 
   const nodes: Node<ConceptNodeData>[] = [];
   const edges: Edge[] = [];
 
-  // Create nodes positioned by category column + row within category
   orderedCategories.forEach((category, catIndex) => {
     const concepts = categoryGroups.get(category)!;
     concepts.forEach((concept, conceptIndex) => {
@@ -56,7 +53,6 @@ function buildLayout(data: ConceptMapData) {
     });
   });
 
-  // Create edges from prerequisites
   for (const concept of data.concepts) {
     for (const prereqId of concept.prerequisites) {
       edges.push({
@@ -71,8 +67,9 @@ function buildLayout(data: ConceptMapData) {
           height: 16,
         },
         style: {
-          stroke: concept.isLocked ? '#9ca3af' : '#3b82f6',
+          stroke: concept.isLocked ? '#d4d0c5' : '#4a7a00',
           strokeWidth: 1.5,
+          opacity: concept.isLocked ? 0.5 : 0.7,
         },
       });
     }
@@ -117,13 +114,14 @@ export function ConceptMapView({ data, onNodeSelect }: ConceptMapViewProps) {
       maxZoom={1.5}
       attributionPosition="bottom-left"
     >
-      <Background variant={BackgroundVariant.Dots} gap={20} size={1} />
-      <Controls showInteractive={false} />
+      <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="rgba(0,0,0,0.08)" />
+      <Controls showInteractive={false} className="!rounded-xl !overflow-hidden !shadow-ambient [&>button]:!bg-card [&>button]:!border-0 [&>button]:!text-muted-foreground [&>button:hover]:!surface-low" />
       <MiniMap
         nodeStrokeWidth={3}
         zoomable
         pannable
-        className="!bg-card !border-border"
+        className="!rounded-xl !bg-card !border-0 !shadow-ambient"
+        maskColor="rgba(251, 249, 242, 0.7)"
       />
     </ReactFlow>
   );

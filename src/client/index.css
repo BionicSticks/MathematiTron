@@ -1,38 +1,117 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:is(.dark *));
-
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 
-  --color-background: #ffffff;
-  --color-foreground: #0f172a;
-  --color-card: #ffffff;
-  --color-card-foreground: #0f172a;
-  --color-popover: #ffffff;
-  --color-popover-foreground: #0f172a;
-  --color-primary: #6366f1;
+  /* === Kinetic Archivist: Light Editorial System === */
+
+  /* Core palette — darkened primary for light-bg legibility */
+  --color-primary: #4a7a00;
   --color-primary-foreground: #ffffff;
-  --color-secondary: #f1f5f9;
-  --color-secondary-foreground: #0f172a;
-  --color-muted: #f1f5f9;
-  --color-muted-foreground: #64748b;
-  --color-accent: #f1f5f9;
-  --color-accent-foreground: #0f172a;
-  --color-destructive: #ef4444;
+  --color-primary-vivid: #B6FF00;
+  --color-secondary: #0090c0;
+  --color-secondary-foreground: #ffffff;
+
+  /* Surface hierarchy (lightest → deepest) */
+  --color-background: #fbf9f2;
+  --color-foreground: #1a1a1a;
+  --color-surface: #fbf9f2;
+  --color-surface-low: #f4f1e8;
+  --color-surface-mid: #eae7dc;
+  --color-surface-high: #dfdbd0;
+  --color-surface-highest: #d4d0c5;
+
+  /* Semantic mappings */
+  --color-card: #ffffff;
+  --color-card-foreground: #1a1a1a;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #1a1a1a;
+  --color-muted: #eae7dc;
+  --color-muted-foreground: #6b6860;
+  --color-accent: #f4f1e8;
+  --color-accent-foreground: #1a1a1a;
+  --color-destructive: #dc2626;
   --color-destructive-foreground: #ffffff;
-  --color-border: #e2e8f0;
-  --color-input: #e2e8f0;
-  --color-ring: #6366f1;
-  --radius: 0.5rem;
+
+  /* Dark surface for contrast sections */
+  --color-dark: #0e0e0e;
+  --color-dark-foreground: #f0ede6;
+
+  /* No-line system: ghost borders only when absolutely needed */
+  --color-border: rgba(0, 0, 0, 0.06);
+  --color-input: #f4f1e8;
+  --color-ring: #4a7a00;
+
+  --radius: 0.75rem;
+
+  /* Bumped base font size */
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
 }
 
 @layer base {
+  html {
+    font-size: 16px;
+  }
+
   body {
     font-family: var(--font-sans);
     background-color: var(--color-background);
     color: var(--color-foreground);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  /* Editorial typography overrides */
+  h1, h2, h3 {
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.125rem; }
+
+  p, li {
+    line-height: 1.65;
+  }
+}
+
+@layer components {
+  /* Glass panels — light version */
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+  }
+
+  /* Surface tiers as utility classes */
+  .surface-low { background-color: var(--color-surface-low); }
+  .surface-mid { background-color: var(--color-surface-mid); }
+  .surface-high { background-color: var(--color-surface-high); }
+  .surface-highest { background-color: var(--color-surface-highest); }
+
+  /* Ambient shadow for floating elements */
+  .shadow-ambient {
+    box-shadow: 0 8px 60px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Accent glow for primary actions */
+  .glow-primary {
+    box-shadow: 0 0 20px rgba(74, 122, 0, 0.2),
+                0 0 60px rgba(74, 122, 0, 0.06);
+  }
+
+  .glow-secondary {
+    box-shadow: 0 0 20px rgba(0, 144, 192, 0.2),
+                0 0 60px rgba(0, 144, 192, 0.06);
   }
 }

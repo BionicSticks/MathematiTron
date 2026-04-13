@@ -7,11 +7,11 @@ import { useConceptMap } from '../hooks/useConceptMap';
 import type { ConceptWithMastery } from '../../types/api';
 
 const legend = [
-  { icon: CheckCircle, color: 'text-green-500', label: 'Mastered (80%+)' },
-  { icon: Circle, color: 'text-blue-500', label: 'In Progress (50%+)' },
-  { icon: Circle, color: 'text-amber-500', label: 'Started' },
+  { icon: CheckCircle, color: 'text-primary', label: 'Mastered (80%+)' },
+  { icon: Circle, color: 'text-secondary', label: 'In Progress (50%+)' },
+  { icon: Circle, color: 'text-amber-600', label: 'Started' },
   { icon: Circle, color: 'text-muted-foreground', label: 'Available' },
-  { icon: Lock, color: 'text-muted-foreground/50', label: 'Locked' },
+  { icon: Lock, color: 'text-muted-foreground/60', label: 'Locked' },
 ];
 
 export function ConceptMapPage() {
@@ -23,11 +23,11 @@ export function ConceptMapPage() {
       <Sidebar />
       <div className="flex flex-1 flex-col min-w-0">
         {/* Legend bar */}
-        <div className="flex flex-wrap items-center gap-4 px-6 py-3 border-b border-border text-xs">
+        <div className="flex flex-wrap items-center gap-4 px-6 py-3 bg-card shadow-ambient text-sm">
           <h1 className="text-base font-semibold mr-2">Concept Map</h1>
           {legend.map(({ icon: Icon, color, label }) => (
             <span key={label} className="flex items-center gap-1.5 text-muted-foreground">
-              <Icon className={`h-3.5 w-3.5 ${color}`} />
+              <Icon className={`h-4 w-4 ${color}`} />
               {label}
             </span>
           ))}

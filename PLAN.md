@@ -232,7 +232,7 @@ MathematiTron/
 **What was built:**
 - Project init: Vite + React 19 + Tailwind 4 + Express 5 + TypeScript
 - Supabase setup: PostgreSQL with 14 tables, all RLS policies, auto-profile trigger
-- Seed data: 111 concepts across 15 categories, 101 prerequisite edges
+- Seed data: 77 concepts across 15 categories, 103 prerequisite edges
 - Auth: Supabase email/password, JWT middleware (requireAuth + optionalAuth), AuthContext with session persistence
 - Onboarding: Goal selection page (7 types, custom description, optional target date), updates profile status to 'goal_set'
 - Dashboard: Stats grid (streak, mastered count, overall mastery %, time this week), 7-day activity, 3 suggested next concepts (from learning path or unlocked), quick action buttons
@@ -323,11 +323,31 @@ MathematiTron/
 - ConceptMapPage — full-width layout using Sidebar directly (not AppShell) for edge-to-edge map
 - DashboardPage — replaced flat mastery stat card with MasteryRing component
 
-**Result:** User can explore the full 111-concept curriculum as an interactive graph. Nodes show mastery state. Clicking opens detail panel with "Start Learning" action. MasteryRing appears on dashboard.
+**Result:** User can explore the full 77-concept curriculum as an interactive graph. Nodes show mastery state. Clicking opens detail panel with "Start Learning" action. MasteryRing appears on dashboard.
 
 ---
 
-### Phase 3: AI Tutor Chat (THE CORE) — NEXT
+### Phase 2.5: UI Redesign — COMPLETE
+
+**Goal:** Apply "Kinetic Archivist" editorial design system across all pages.
+
+**What was built:**
+- Light editorial theme: warm off-white (#fbf9f2) background, white card surfaces with ambient shadows
+- Surface tier system: surface-low → surface-mid → surface-high → surface-highest for depth without borders
+- "No-Line" rule: all explicit borders removed, replaced by tonal surface shifts and ambient shadows
+- Glassmorphism utility classes (glass, glass-strong) for floating panels
+- Primary: dark green (#4a7a00), Secondary: cyan (#0090c0) — to be updated to vivid neon (#B6FF00) for buttons/accents in future polish pass
+- Typography: Inter with tightened headline tracking (-0.02em), generous body line-height (1.65), h1=2rem h2=1.5rem h3=1.125rem
+- Fully rounded CTA buttons with glow-primary shadow effect
+- Input fields: surface-tier backgrounds, no borders, ring-glow focus state
+- Concept map: white card nodes with ambient shadows on off-white canvas, green edges for unlocked paths
+- Sidebar: white card with ambient shadow, surface-tier active states, solid primary avatar badge
+- All pages updated: Landing, Onboarding, Dashboard, ConceptMap, ConceptDetailPanel, ConceptNode, MasteryRing, NotFound
+- Design file: `DESIGN (1).md` — original dark "Kinetic Archivist" spec from Stitch (used as reference, inverted to light)
+
+---
+
+### Phase 3: AI Tutor Chat (THE CORE) — COMPLETE
 
 **Goal:** User can have real-time conversations with Claude as their math tutor. Messages stream via SSE, math renders with KaTeX, conversations persist across sessions.
 
@@ -426,6 +446,18 @@ MathematiTron/
 - New conversation button
 
 **Result:** User can chat with the AI tutor. Messages stream in real-time with KaTeX math rendering. Conversations are listed in sidebar and persist across sessions. Context is managed to keep conversations coherent over long sessions.
+
+**What was built:**
+- AI client: Anthropic SDK setup with Claude Sonnet, shared client instance
+- 5-layer system prompt: tutor identity (Socratic, progressive hints, LaTeX) + student profile (name, goal, mastery, insights) + concept context (topic, prerequisites, mastery) + conversation summary + behavioral instructions per type (tutoring/diagnostic/practice/review)
+- Context manager: last 20 messages verbatim, older messages summarised every 30 messages, summary stored in conversation.metadata
+- Streaming tutor: SSE streaming from Claude → browser, saves complete assistant message to DB on stream end, tracks token usage
+- Conversations route: POST /:id/messages now streams real AI responses via SSE (replaced Phase 1 stub)
+- SSE parser: updated client-side apiStream() to handle named SSE events (event: delta/done/error)
+- Chat hooks: useChat() — conversation CRUD, message sending, streaming state, optimistic UI updates, abort support
+- Chat components: ChatPanel (message list + auto-scroll + empty state), MessageBubble (user/assistant styling with avatars), StreamingMessage (typing indicator + progressive reveal), ChatInput (auto-resize textarea, Enter to send, Shift+Enter for newlines), MathBlock (react-markdown + remark-math + rehype-katex for LaTeX)
+- TutorChatPage: full implementation with conversation sidebar (list + new chat button), main chat area, concept-linked conversations via ?concept= query param
+- Blocked on: Anthropic API credits (separate from Claude subscription) — need to add credits at console.anthropic.com before chat works end-to-end
 
 ---
 
