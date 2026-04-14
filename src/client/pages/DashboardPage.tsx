@@ -41,7 +41,7 @@ export function DashboardPage() {
               value={`${stats.currentStreak} day${stats.currentStreak !== 1 ? 's' : ''}`}
             />
             <StatCard
-              icon={<BookOpen className="h-5 w-5 text-secondary" />}
+              icon={<BookOpen className="h-5 w-5 text-secondary-dark" />}
               label="Concepts Mastered"
               value={`${stats.masteredConcepts} / ${stats.totalConcepts}`}
             />
@@ -72,7 +72,7 @@ export function DashboardPage() {
                       <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                         {concept.category.replace('-', ' ')}
                       </span>
-                      <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                      <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary-dark transition-colors" />
                     </div>
                     <h3 className="font-semibold mb-1">{concept.name}</h3>
                     <p className="text-sm text-muted-foreground line-clamp-2">{concept.description}</p>

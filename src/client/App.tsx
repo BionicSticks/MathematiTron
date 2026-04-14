@@ -28,8 +28,8 @@ function AppRoutes() {
     return <LandingPage />;
   }
 
-  // Logged in but needs onboarding
-  if (profile?.onboarding_status === 'new') {
+  // Logged in but needs onboarding (any status before 'active')
+  if (profile && profile.onboarding_status !== 'active') {
     return (
       <Switch>
         <Route path="/onboarding" component={OnboardingPage} />

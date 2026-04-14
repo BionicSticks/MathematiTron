@@ -29,7 +29,7 @@ export function Sidebar() {
     <aside className="flex w-64 flex-col bg-card shadow-ambient">
       {/* Logo */}
       <div className="flex items-center gap-2 p-5 pb-6">
-        <GraduationCap className="h-7 w-7 text-primary" />
+        <GraduationCap className="h-7 w-7 text-primary-dark" />
         <span className="text-lg font-semibold tracking-tight">MathematiTron</span>
       </div>
 
@@ -41,7 +41,7 @@ export function Sidebar() {
             <Link key={path} href={path}>
               <div className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors cursor-pointer ${
                 isActive
-                  ? 'surface-low text-primary'
+                  ? 'surface-low text-primary-dark'
                   : 'text-muted-foreground hover:surface-low hover:text-foreground'
               }`}>
                 <Icon className="h-5 w-5" />

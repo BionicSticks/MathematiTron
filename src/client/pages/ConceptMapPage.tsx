@@ -7,8 +7,8 @@ import { useConceptMap } from '../hooks/useConceptMap';
 import type { ConceptWithMastery } from '../../types/api';
 
 const legend = [
-  { icon: CheckCircle, color: 'text-primary', label: 'Mastered (80%+)' },
-  { icon: Circle, color: 'text-secondary', label: 'In Progress (50%+)' },
+  { icon: CheckCircle, color: 'text-primary-dark', label: 'Mastered (80%+)' },
+  { icon: Circle, color: 'text-secondary-dark', label: 'In Progress (50%+)' },
   { icon: Circle, color: 'text-amber-600', label: 'Started' },
   { icon: Circle, color: 'text-muted-foreground', label: 'Available' },
   { icon: Lock, color: 'text-muted-foreground/60', label: 'Locked' },

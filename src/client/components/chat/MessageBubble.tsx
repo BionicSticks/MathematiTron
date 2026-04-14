@@ -13,7 +13,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
     <div className={`flex gap-3 ${isUser ? 'flex-row-reverse' : ''}`}>
       {/* Avatar */}
       <div className={`flex-shrink-0 h-8 w-8 rounded-full flex items-center justify-center ${
-        isUser ? 'bg-primary/10 text-primary' : 'surface-mid text-muted-foreground'
+        isUser ? 'bg-primary/10 text-primary-dark' : 'surface-mid text-muted-foreground'
       }`}>
         {isUser ? <User className="h-4 w-4" /> : <GraduationCap className="h-4 w-4" />}
       </div>

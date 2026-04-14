@@ -65,6 +65,38 @@ export interface SetGoalRequest {
   target_date?: string;
 }
 
+// Diagnostic
+export type DiagnosticQuestionType = 'multiple_choice' | 'short_answer' | 'math_expression';
+
+export interface DiagnosticQuestion {
+  questionNumber: number;
+  totalExpected: number;
+  categoryBeingProbed: string;
+  conceptId: string | null;
+  questionText: string;
+  questionType: DiagnosticQuestionType;
+  options?: string[];
+  difficulty: number;
+}
+
+export interface DiagnosticStartResponse {
+  conversationId: string;
+  question: DiagnosticQuestion;
+}
+
+export interface DiagnosticAnswerRequest {
+  conversationId: string;
+  answer: string | null;
+  questionNumber: number;
+  timeSpentSeconds?: number;
+}
+
+export interface DiagnosticAnswerResponse {
+  isComplete: boolean;
+  nextQuestion?: DiagnosticQuestion;
+  result?: DiagnosticResult;
+}
+
 export interface DiagnosticResult {
   conceptMastery: Array<{
     concept_id: string;
@@ -72,7 +104,16 @@ export interface DiagnosticResult {
     category: string;
     estimated_mastery: number;
   }>;
+  categoryBreakdown: Array<{
+    category: string;
+    categoryLabel: string;
+    averageMastery: number;
+    conceptCount: number;
+  }>;
   suggestedPath: string[];
+  strengths: string[];
+  gaps: string[];
+  estimatedTotalMinutes: number;
   summary: string;
 }
 

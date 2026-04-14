@@ -5,12 +5,13 @@
 
   /* === Kinetic Archivist: Light Editorial System === */
 
-  /* Core palette — darkened primary for light-bg legibility */
-  --color-primary: #4a7a00;
-  --color-primary-foreground: #ffffff;
-  --color-primary-vivid: #B6FF00;
-  --color-secondary: #0090c0;
-  --color-secondary-foreground: #ffffff;
+  /* Core palette — vivid neon from design system */
+  --color-primary: #B6FF00;
+  --color-primary-foreground: #1a1a1a;
+  --color-primary-dark: #4a7a00;
+  --color-secondary: #00C2FF;
+  --color-secondary-foreground: #1a1a1a;
+  --color-secondary-dark: #0078a0;
 
   /* Surface hierarchy (lightest → deepest) */
   --color-background: #fbf9f2;
@@ -40,7 +41,7 @@
   /* No-line system: ghost borders only when absolutely needed */
   --color-border: rgba(0, 0, 0, 0.06);
   --color-input: #f4f1e8;
-  --color-ring: #4a7a00;
+  --color-ring: #B6FF00;
 
   --radius: 0.75rem;
 
@@ -106,12 +107,12 @@
 
   /* Accent glow for primary actions */
   .glow-primary {
-    box-shadow: 0 0 20px rgba(74, 122, 0, 0.2),
-                0 0 60px rgba(74, 122, 0, 0.06);
+    box-shadow: 0 0 20px rgba(182, 255, 0, 0.3),
+                0 0 60px rgba(182, 255, 0, 0.1);
   }
 
   .glow-secondary {
-    box-shadow: 0 0 20px rgba(0, 144, 192, 0.2),
-                0 0 60px rgba(0, 144, 192, 0.06);
+    box-shadow: 0 0 20px rgba(0, 194, 255, 0.3),
+                0 0 60px rgba(0, 194, 255, 0.1);
   }
 }

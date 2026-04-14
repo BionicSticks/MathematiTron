@@ -74,7 +74,7 @@ export function ConceptDetailPanel({ concept, onClose }: ConceptDetailPanelProps
                 <div key={p.id} className="flex items-center justify-between text-sm rounded-xl surface-low px-3 py-2.5">
                   <span className="truncate">{p.name}</span>
                   <span className={`text-xs font-semibold ${
-                    p.mastery >= 60 ? 'text-primary' : 'text-muted-foreground'
+                    p.mastery >= 60 ? 'text-primary-dark' : 'text-muted-foreground'
                   }`}>
                     {Math.round(p.mastery)}%
                   </span>

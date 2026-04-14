@@ -34,7 +34,7 @@ export function LandingPage() {
       {/* Left: Hero */}
       <div className="hidden lg:flex lg:w-1/2 flex-col justify-center px-16">
         <div className="flex items-center gap-3 mb-12">
-          <GraduationCap className="h-10 w-10 text-primary" />
+          <GraduationCap className="h-10 w-10 text-primary-dark" />
           <h1 className="text-3xl font-bold tracking-tight">MathematiTron</h1>
         </div>
         <h2 className="text-5xl font-bold leading-tight mb-8">
@@ -54,7 +54,7 @@ export function LandingPage() {
           ].map(({ icon: Icon, title, desc }) => (
             <div key={title} className="flex items-start gap-4">
               <div className="rounded-xl bg-primary/10 p-3">
-                <Icon className="h-5 w-5 text-primary" />
+                <Icon className="h-5 w-5 text-primary-dark" />
               </div>
               <div>
                 <h3 className="font-semibold mb-1">{title}</h3>
@@ -69,7 +69,7 @@ export function LandingPage() {
       <div className="flex w-full lg:w-1/2 items-center justify-center px-8">
         <div className="w-full max-w-sm">
           <div className="lg:hidden flex items-center gap-3 mb-10">
-            <GraduationCap className="h-8 w-8 text-primary" />
+            <GraduationCap className="h-8 w-8 text-primary-dark" />
             <h1 className="text-2xl font-bold tracking-tight">MathematiTron</h1>
           </div>
 
@@ -138,7 +138,7 @@ export function LandingPage() {
               {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
               <button
                 onClick={() => { setIsSignUp(!isSignUp); setError(''); }}
-                className="text-primary hover:brightness-110 font-medium"
+                className="text-primary-dark hover:brightness-110 font-medium"
               >
                 {isSignUp ? 'Sign in' : 'Sign up'}
               </button>

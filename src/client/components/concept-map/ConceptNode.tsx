@@ -13,14 +13,14 @@ export interface ConceptNodeData {
 const statusConfig = {
   mastered: {
     icon: CheckCircle,
-    color: 'text-primary',
+    color: 'text-primary-dark',
     bgColor: 'bg-primary/10',
     barColor: 'bg-primary',
     nodeBg: 'bg-card',
   },
   'in-progress': {
     icon: Circle,
-    color: 'text-secondary',
+    color: 'text-secondary-dark',
     bgColor: 'bg-secondary/10',
     barColor: 'bg-secondary',
     nodeBg: 'bg-card',

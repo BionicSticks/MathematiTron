@@ -67,7 +67,7 @@ function buildLayout(data: ConceptMapData) {
           height: 16,
         },
         style: {
-          stroke: concept.isLocked ? '#d4d0c5' : '#4a7a00',
+          stroke: concept.isLocked ? '#d4d0c5' : '#7abf00',
           strokeWidth: 1.5,
           opacity: concept.isLocked ? 0.5 : 0.7,
         },
