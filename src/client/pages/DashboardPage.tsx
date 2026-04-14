@@ -4,7 +4,7 @@ import { apiFetch } from '../lib/api';
 import { AppShell } from '../components/layout/AppShell';
 import { Link } from 'wouter';
 import type { DashboardStats } from '../../types/api';
-import { Flame, BookOpen, Clock, ArrowRight, Map } from 'lucide-react';
+import { Flame, BookOpen, Clock, ArrowRight, Map, Dumbbell } from 'lucide-react';
 import { MasteryRing } from '../components/progress/MasteryRing';
 
 export function DashboardPage() {
@@ -66,7 +66,7 @@ export function DashboardPage() {
             <h2 className="text-lg font-semibold mb-4">Continue Learning</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {stats.suggestedConcepts.map(concept => (
-                <Link key={concept.id} href={`/chat?concept=${concept.id}`}>
+                <Link key={concept.id} href={`/practice/${concept.id}`}>
                   <div className="group rounded-2xl bg-card shadow-ambient p-5 hover:shadow-lg transition-all cursor-pointer">
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
@@ -104,6 +104,12 @@ export function DashboardPage() {
             <Link href="/chat">
               <button className="flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground hover:brightness-110 transition-all glow-primary">
                 Start a Tutoring Session
+              </button>
+            </Link>
+            <Link href="/practice">
+              <button className="flex items-center gap-2 rounded-full surface-low px-6 py-2.5 text-sm font-medium hover:surface-mid transition-colors">
+                <Dumbbell className="h-4 w-4" />
+                Practice Problems
               </button>
             </Link>
             <Link href="/map">

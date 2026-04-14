@@ -9,6 +9,7 @@ import dashboardRoutes from './routes/dashboard';
 import progressRoutes from './routes/progress';
 import conversationRoutes from './routes/conversations';
 import onboardingRoutes from './routes/onboarding';
+import practiceRoutes from './routes/practice';
 
 const app = express();
 const PORT = parseInt(process.env.PORT ?? '3000');
@@ -24,6 +25,7 @@ app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/progress', progressRoutes);
 app.use('/api/conversations', conversationRoutes);
 app.use('/api/onboarding', onboardingRoutes);
+app.use('/api/practice', practiceRoutes);
 
 // Health check
 app.get('/api/health', (_req, res) => {

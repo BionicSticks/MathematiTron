@@ -118,6 +118,30 @@ export interface DiagnosticResult {
 }
 
 // Practice
+export interface PracticeConceptsResponse {
+  recommended: ConceptWithMastery[];
+  available: ConceptWithMastery[];
+}
+
+export interface PracticeSessionStartResponse {
+  sessionId: string;
+  problem: GeneratedProblem;
+  mastery: number;
+}
+
+export interface PracticeNextProblemResponse {
+  problem: GeneratedProblem;
+  problemNumber: number;
+}
+
+export interface PracticeSessionEndResponse {
+  score: number;
+  totalProblems: number;
+  masteryChange: number;
+  timeSpentSeconds: number;
+  newMasteryLevel: number;
+}
+
 export interface GeneratedProblem {
   id: string;
   problem_text: string;
