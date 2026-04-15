@@ -14,22 +14,22 @@ const statusConfig = {
   mastered: {
     icon: CheckCircle,
     color: 'text-primary-dark',
-    bgColor: 'bg-primary/10',
+    bgColor: 'bg-primary/15',
     barColor: 'bg-primary',
     nodeBg: 'bg-card',
   },
   'in-progress': {
     icon: Circle,
     color: 'text-secondary-dark',
-    bgColor: 'bg-secondary/10',
+    bgColor: 'bg-secondary/15',
     barColor: 'bg-secondary',
     nodeBg: 'bg-card',
   },
   started: {
     icon: Circle,
-    color: 'text-amber-600',
-    bgColor: 'bg-amber-50',
-    barColor: 'bg-amber-500',
+    color: 'text-amber-500',
+    bgColor: 'bg-amber-400/15',
+    barColor: 'bg-amber-400',
     nodeBg: 'bg-card',
   },
   available: {

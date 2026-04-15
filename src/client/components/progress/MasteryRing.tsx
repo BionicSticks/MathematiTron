@@ -13,10 +13,10 @@ export function MasteryRing({ value, size = 80, strokeWidth = 6, label }: Master
   const offset = circumference - (Math.min(value, 100) / 100) * circumference;
 
   const getColor = (v: number) => {
-    if (v >= 80) return 'text-primary-dark';
-    if (v >= 50) return 'text-secondary-dark';
-    if (v > 0) return 'text-amber-500';
-    return 'text-muted-foreground';
+    if (v >= 80) return 'text-primary';
+    if (v >= 50) return 'text-secondary';
+    if (v > 0) return 'text-amber-400';
+    return 'text-surface-high';
   };
 
   return (

@@ -8,10 +8,10 @@
   /* Core palette — vivid neon from design system */
   --color-primary: #B6FF00;
   --color-primary-foreground: #1a1a1a;
-  --color-primary-dark: #6aad00;
+  --color-primary-dark: #7abf00;
   --color-secondary: #00C2FF;
   --color-secondary-foreground: #1a1a1a;
-  --color-secondary-dark: #0078a0;
+  --color-secondary-dark: #00a0d6;
 
   /* Surface hierarchy (lightest → deepest) */
   --color-background: #fbf9f2;
@@ -107,12 +107,12 @@
 
   /* Accent glow for primary actions */
   .glow-primary {
-    box-shadow: 0 0 20px rgba(182, 255, 0, 0.3),
-                0 0 60px rgba(182, 255, 0, 0.1);
+    box-shadow: 0 0 24px rgba(182, 255, 0, 0.35),
+                0 0 60px rgba(182, 255, 0, 0.15);
   }
 
   .glow-secondary {
-    box-shadow: 0 0 20px rgba(0, 194, 255, 0.3),
-                0 0 60px rgba(0, 194, 255, 0.1);
+    box-shadow: 0 0 24px rgba(0, 194, 255, 0.35),
+                0 0 60px rgba(0, 194, 255, 0.15);
   }
 }
