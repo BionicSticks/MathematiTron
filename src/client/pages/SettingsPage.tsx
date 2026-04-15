@@ -4,7 +4,7 @@ import { AppShell } from '../components/layout/AppShell';
 import { useAuth } from '../contexts/AuthContext';
 import { apiFetch } from '../lib/api';
 import type { StudentGoal } from '../../types/database';
-import { User, Target, Globe, LogOut, Check } from 'lucide-react';
+import { User, Target, Globe, LogOut, Check, Sparkles } from 'lucide-react';
 
 const GOAL_TYPES: Array<{ value: StudentGoal['goal_type']; label: string }> = [
   { value: 'sat_math', label: 'SAT Math' },
@@ -196,6 +196,58 @@ export function SettingsPage() {
             )}
           </div>
           <p className="text-xs text-muted-foreground">Changing your goal will generate a new learning path</p>
+        </section>
+
+        {/* Subscription */}
+        <section className="rounded-2xl bg-card shadow-ambient p-6 space-y-5">
+          <div className="flex items-center gap-3">
+            <Sparkles className="h-5 w-5 text-primary-dark" />
+            <h2 className="text-lg font-semibold">Subscription</h2>
+          </div>
+
+          {(profile?.subscription_tier ?? 'free') === 'free' ? (
+            <div className="space-y-4">
+              <div className="rounded-xl surface-low p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-sm font-semibold">Free Plan</span>
+                  <span className="text-xs text-muted-foreground">Current</span>
+                </div>
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li>Practice with static problems</li>
+                  <li>Concept map and progress tracking</li>
+                  <li>Limited features</li>
+                </ul>
+              </div>
+              <div className="rounded-xl bg-primary/5 p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-sm font-semibold">Student Plan</span>
+                  <span className="text-sm font-bold text-primary-dark">$35/year</span>
+                </div>
+                <ul className="text-sm text-muted-foreground space-y-1 mb-4">
+                  <li>AI-powered tutoring sessions</li>
+                  <li>AI diagnostic assessment</li>
+                  <li>Adaptive AI practice (unlimited)</li>
+                  <li>Personalised learning insights</li>
+                </ul>
+                <button
+                  className="w-full rounded-full bg-primary py-2.5 text-sm font-semibold text-primary-foreground hover:brightness-110 transition-all glow-primary"
+                  onClick={() => alert('Stripe integration coming soon!')}
+                >
+                  Upgrade to Student
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="rounded-xl surface-low p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <span className="text-sm font-semibold capitalize">{profile?.subscription_tier} Plan</span>
+                  <p className="text-xs text-muted-foreground mt-0.5">All AI features unlocked</p>
+                </div>
+                <span className="text-xs font-semibold text-primary-dark bg-primary/10 rounded-full px-3 py-1">Active</span>
+              </div>
+            </div>
+          )}
         </section>
 
         {/* Sign Out */}

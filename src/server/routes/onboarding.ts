@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { requireAuth } from '../middleware/auth';
+import { requireAuth, requireTier } from '../middleware/auth';
 import { createGoal, updateProfile, getActiveGoal, getProfile } from '../db/queries/profiles';
 import { createConversation, getConversations, getMessages, saveMessage } from '../db/queries/conversations';
 import { upsertMastery } from '../db/queries/mastery';
@@ -34,8 +34,8 @@ router.post('/goal', requireAuth, async (req, res) => {
   res.status(201).json(goal);
 });
 
-// Start diagnostic assessment
-router.post('/diagnostic/start', requireAuth, async (req, res) => {
+// Start diagnostic assessment (paid tier only — free users should skip)
+router.post('/diagnostic/start', requireAuth, requireTier('student', 'family'), async (req, res) => {
   try {
     const profile = await getProfile(req.userId!);
     if (!profile || (profile.onboarding_status !== 'goal_set' && profile.onboarding_status !== 'diagnostic_started')) {
@@ -110,8 +110,8 @@ router.post('/diagnostic/start', requireAuth, async (req, res) => {
   }
 });
 
-// Submit answer and get next question
-router.post('/diagnostic/respond', requireAuth, async (req, res) => {
+// Submit answer and get next question (paid tier only)
+router.post('/diagnostic/respond', requireAuth, requireTier('student', 'family'), async (req, res) => {
   try {
     const { conversationId, answer, questionNumber, timeSpentSeconds } = req.body;
 

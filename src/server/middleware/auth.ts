@@ -41,6 +41,24 @@ export async function requireAuth(req: Request, res: Response, next: NextFunctio
   next();
 }
 
+/**
+ * Require a minimum subscription tier. Must be used AFTER requireAuth.
+ * Free-tier users get gated from AI-powered features.
+ */
+export function requireTier(...allowedTiers: Array<'free' | 'student' | 'family'>) {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const tier = req.userProfile?.subscription_tier ?? 'free';
+    if (allowedTiers.includes(tier as 'free' | 'student' | 'family')) {
+      return next();
+    }
+    return res.status(403).json({
+      error: 'This feature requires a paid subscription',
+      requiredTier: allowedTiers[0],
+      currentTier: tier,
+    });
+  };
+}
+
 // Optional auth - doesn't fail if no token, just sets user if present
 export async function optionalAuth(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;

@@ -31,9 +31,10 @@ async function generateProblemFn(
   difficulty: number,
   masteryLevel: number,
   previousProblems?: string[],
+  userTier: string = 'free',
 ) {
-  // Try AI first if enabled
-  if (useAI) {
+  // Try AI first if enabled AND user is on a paid tier
+  if (useAI && userTier !== 'free') {
     try {
       return await generateProblem(conceptId, conceptName, conceptDescription, difficulty, masteryLevel, previousProblems);
     } catch (err) {
@@ -132,12 +133,15 @@ router.post('/session/start', requireAuth, async (req, res) => {
 
     const startDifficulty = Math.max(1, Math.min(10, Math.ceil(masteryLevel / 15) + Math.floor(concept.difficulty / 2)));
 
+    const userTier = req.userProfile?.subscription_tier ?? 'free';
     const problem = await generateProblemFn(
       conceptId,
       concept.name,
       concept.description,
       startDifficulty,
       masteryLevel,
+      undefined,
+      userTier,
     );
 
     const savedProblem = await savePracticeProblem({
@@ -247,12 +251,15 @@ router.post('/session/:sessionId/next', requireAuth, async (req, res) => {
     const currentDifficulty = req.body.currentDifficulty as number ?? Math.ceil(concept.difficulty / 2);
     const nextDifficulty = selectNextDifficulty(recentResults, currentDifficulty);
 
+    const userTier = req.userProfile?.subscription_tier ?? 'free';
     const problem = await generateProblemFn(
       session.concept_id,
       concept.name,
       concept.description,
       nextDifficulty,
       masteryLevel,
+      undefined,
+      userTier,
     );
 
     const savedProblem = await savePracticeProblem({

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { requireAuth } from '../middleware/auth';
+import { requireAuth, requireTier } from '../middleware/auth';
 import {
   getConversations,
   getConversation,
@@ -61,8 +61,8 @@ router.patch('/:id', requireAuth, async (req, res) => {
   res.json(updated);
 });
 
-// Send message and stream AI response via SSE
-router.post('/:id/messages', requireAuth, async (req, res) => {
+// Send message and stream AI response via SSE (paid tier only)
+router.post('/:id/messages', requireAuth, requireTier('student', 'family'), async (req, res) => {
   const conversation = await getConversation(req.params.id as string, req.userId!);
   if (!conversation) {
     return res.status(404).json({ error: 'Conversation not found' });

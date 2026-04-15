@@ -77,9 +77,16 @@ export function Sidebar() {
             <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-semibold">
               {displayName[0].toUpperCase()}
             </div>
-            <span className="truncate text-sm font-medium">
-              {displayName}
-            </span>
+            <div className="min-w-0">
+              <span className="truncate text-sm font-medium block">
+                {displayName}
+              </span>
+              {profile?.subscription_tier && profile.subscription_tier !== 'free' && (
+                <span className="text-[10px] font-semibold text-primary-dark uppercase tracking-wider">
+                  {profile.subscription_tier}
+                </span>
+              )}
+            </div>
           </div>
           <button
             onClick={signOut}

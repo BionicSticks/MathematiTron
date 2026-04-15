@@ -4,7 +4,7 @@ import { apiFetch } from '../lib/api';
 import { AppShell } from '../components/layout/AppShell';
 import { Link } from 'wouter';
 import type { DashboardStats } from '../../types/api';
-import { Flame, BookOpen, Clock, ArrowRight, Map, Dumbbell, Lightbulb, X } from 'lucide-react';
+import { Flame, BookOpen, Clock, ArrowRight, Map, Dumbbell, Lightbulb, X, Sparkles } from 'lucide-react';
 import { MasteryRing } from '../components/progress/MasteryRing';
 import { useInsights, useDismissInsight } from '../hooks/useInsights';
 import { useActivityHistory } from '../hooks/useProgress';
@@ -106,15 +106,37 @@ export function DashboardPage() {
         {/* Activity Heatmap */}
         <ActivitySection />
 
+        {/* Upgrade banner for free users */}
+        {(profile?.subscription_tier ?? 'free') === 'free' && (
+          <section className="rounded-2xl bg-primary/5 shadow-ambient p-5 flex items-center gap-4 flex-wrap">
+            <div className="flex items-center gap-3 flex-1 min-w-[200px]">
+              <div className="rounded-full bg-primary/10 p-2">
+                <Sparkles className="h-5 w-5 text-primary-dark" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold">Unlock AI Tutoring</p>
+                <p className="text-xs text-muted-foreground">Get personalised lessons, adaptive practice, and more for $35/year</p>
+              </div>
+            </div>
+            <Link href="/settings">
+              <button className="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground hover:brightness-110 transition-all glow-primary whitespace-nowrap">
+                Upgrade
+              </button>
+            </Link>
+          </section>
+        )}
+
         {/* Quick Actions */}
         <section>
           <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
           <div className="flex flex-wrap gap-3">
-            <Link href="/chat">
-              <button className="flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground hover:brightness-110 transition-all glow-primary">
-                Start a Tutoring Session
-              </button>
-            </Link>
+            {(profile?.subscription_tier ?? 'free') !== 'free' ? (
+              <Link href="/chat">
+                <button className="flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground hover:brightness-110 transition-all glow-primary">
+                  Start a Tutoring Session
+                </button>
+              </Link>
+            ) : null}
             <Link href="/practice">
               <button className="flex items-center gap-2 rounded-full surface-low px-6 py-2.5 text-sm font-medium hover:surface-mid transition-colors">
                 <Dumbbell className="h-4 w-4" />

@@ -3,10 +3,14 @@ import { useRoute, useLocation, useSearch } from 'wouter';
 import { Sidebar } from '../components/layout/Sidebar';
 import { ChatPanel } from '../components/chat/ChatPanel';
 import { useChat } from '../hooks/useChat';
+import { useAuth } from '../contexts/AuthContext';
+import { UpgradePrompt } from '../components/ui/UpgradePrompt';
 import { Plus, MessageSquare } from 'lucide-react';
 import type { Conversation } from '../../types/database';
 
 export function TutorChatPage() {
+  const { profile } = useAuth();
+  const isFree = (profile?.subscription_tier ?? 'free') === 'free';
   const [, params] = useRoute('/chat/:id');
   const [, navigate] = useLocation();
   const search = useSearch();
@@ -50,6 +54,17 @@ export function TutorChatPage() {
     const conv = await createConversation();
     navigate(`/chat/${conv.id}`);
   };
+
+  if (isFree) {
+    return (
+      <div className="flex h-screen bg-background">
+        <Sidebar />
+        <div className="flex-1 flex items-center justify-center p-8">
+          <UpgradePrompt feature="AI Tutoring" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-screen bg-background">
