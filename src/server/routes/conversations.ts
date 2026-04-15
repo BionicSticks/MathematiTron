@@ -9,6 +9,7 @@ import {
   saveMessage,
 } from '../db/queries/conversations';
 import { streamTutorResponse } from '../services/ai/tutor';
+import { upsertDailyActivity } from '../db/queries/activity';
 
 const router = Router();
 
@@ -79,6 +80,12 @@ router.post('/:id/messages', requireAuth, async (req, res) => {
     content: content.trim(),
     concept_id: conversation.primary_concept_id ?? undefined,
   });
+
+  // Track activity (fire-and-forget)
+  upsertDailyActivity(req.userId!, {
+    messages_sent: 1,
+    concept_id: conversation.primary_concept_id ?? undefined,
+  }).catch(() => {});
 
   // Set SSE headers
   res.setHeader('Content-Type', 'text/event-stream');

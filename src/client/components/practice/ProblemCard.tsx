@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle, XCircle, Lightbulb, ArrowRight, Square } from 'lucide-react';
 import { MathBlock } from '../chat/MathBlock';
 import { MasteryRing } from '../progress/MasteryRing';
+import { MathInput } from '../ui/MathInput';
 import type { GeneratedProblem, ProblemSubmitResponse } from '../../../types/api';
 
 interface ProblemCardProps {
@@ -35,12 +36,14 @@ export function ProblemCard({
   const [answer, setAnswer] = useState('');
   const progress = (problemNumber / totalProblems) * 100;
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     if (answer.trim()) {
       onSubmit(answer.trim());
       setAnswer('');
     }
-  };
+  }, [answer, onSubmit]);
+
+  const handleAnswerChange = useCallback((val: string) => setAnswer(val), []);
 
   return (
     <AnimatePresence mode="wait">
@@ -120,22 +123,14 @@ export function ProblemCard({
           {/* Answer input (only when not in feedback state) */}
           {!feedback && (
             <div className="mb-6">
-              <input
-                type="text"
+              <MathInput
                 value={answer}
-                onChange={e => setAnswer(e.target.value)}
-                onKeyDown={e => { if (e.key === 'Enter' && answer.trim() && !isLoading) handleSubmit(); }}
+                onChange={handleAnswerChange}
+                onSubmit={answer.trim() && !isLoading ? handleSubmit : undefined}
                 disabled={isLoading}
-                className="w-full rounded-xl surface-low px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-shadow"
-                placeholder="Type your answer..."
+                placeholder="Type your answer — use the keyboard for fractions, exponents, etc."
                 autoFocus
               />
-              {answer.trim() && (
-                <div className="mt-2 rounded-xl surface-low px-4 py-2 text-sm">
-                  <span className="text-xs text-muted-foreground">Preview: </span>
-                  <MathBlock content={`$${answer}$`} />
-                </div>
-              )}
             </div>
           )}
 

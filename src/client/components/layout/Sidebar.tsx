@@ -9,7 +9,10 @@ import {
   Settings,
   LogOut,
   GraduationCap,
+  Menu,
+  X,
 } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 const navItems = [
   { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -24,13 +27,28 @@ export function Sidebar() {
   const [location] = useLocation();
   const { profile, user, signOut } = useAuth();
   const displayName = profile?.display_name || user?.email?.split('@')[0] || 'Student';
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  return (
-    <aside className="flex w-64 flex-col bg-card shadow-ambient">
+  // Close mobile menu on navigation
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location]);
+
+  const sidebarContent = (
+    <>
       {/* Logo */}
-      <div className="flex items-center gap-2 p-5 pb-6">
-        <GraduationCap className="h-7 w-7 text-primary-dark" />
-        <span className="text-lg font-semibold tracking-tight">MathematiTron</span>
+      <div className="flex items-center justify-between p-5 pb-6">
+        <div className="flex items-center gap-2">
+          <GraduationCap className="h-7 w-7 text-primary-dark" />
+          <span className="text-lg font-semibold tracking-tight">MathematiTron</span>
+        </div>
+        {/* Mobile close button */}
+        <button
+          onClick={() => setMobileOpen(false)}
+          className="md:hidden rounded-lg p-1.5 text-muted-foreground hover:text-foreground hover:surface-mid transition-colors"
+        >
+          <X className="h-5 w-5" />
+        </button>
       </div>
 
       {/* Navigation */}
@@ -72,6 +90,41 @@ export function Sidebar() {
           </button>
         </div>
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* Mobile hamburger button */}
+      <button
+        onClick={() => setMobileOpen(true)}
+        className="fixed top-4 left-4 z-40 md:hidden rounded-xl bg-card shadow-ambient p-2.5"
+        aria-label="Open menu"
+      >
+        <Menu className="h-5 w-5" />
+      </button>
+
+      {/* Mobile overlay */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/30 md:hidden"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+
+      {/* Mobile sidebar */}
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col bg-card shadow-ambient transform transition-transform duration-200 ease-out md:hidden ${
+          mobileOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        {sidebarContent}
+      </aside>
+
+      {/* Desktop sidebar */}
+      <aside className="hidden md:flex w-64 flex-col bg-card shadow-ambient shrink-0">
+        {sidebarContent}
+      </aside>
+    </>
   );
 }

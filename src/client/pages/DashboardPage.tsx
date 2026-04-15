@@ -4,8 +4,11 @@ import { apiFetch } from '../lib/api';
 import { AppShell } from '../components/layout/AppShell';
 import { Link } from 'wouter';
 import type { DashboardStats } from '../../types/api';
-import { Flame, BookOpen, Clock, ArrowRight, Map, Dumbbell } from 'lucide-react';
+import { Flame, BookOpen, Clock, ArrowRight, Map, Dumbbell, Lightbulb, X } from 'lucide-react';
 import { MasteryRing } from '../components/progress/MasteryRing';
+import { useInsights, useDismissInsight } from '../hooks/useInsights';
+import { useActivityHistory } from '../hooks/useProgress';
+import { StreakCalendar } from '../components/progress/StreakCalendar';
 
 export function DashboardPage() {
   const { profile } = useAuth();
@@ -97,6 +100,12 @@ export function DashboardPage() {
           </section>
         )}
 
+        {/* Insights */}
+        <InsightsCard />
+
+        {/* Activity Heatmap */}
+        <ActivitySection />
+
         {/* Quick Actions */}
         <section>
           <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
@@ -134,5 +143,59 @@ function StatCard({ icon, label, value }: { icon: React.ReactNode; label: string
       </div>
       <p className="text-xl font-bold">{value}</p>
     </div>
+  );
+}
+
+function InsightsCard() {
+  const { data } = useInsights();
+  const dismiss = useDismissInsight();
+
+  const topInsights = data?.insights.slice(0, 3);
+  if (!topInsights?.length) return null;
+
+  return (
+    <section className="rounded-2xl bg-card shadow-ambient p-6">
+      <div className="flex items-center gap-2 mb-4">
+        <Lightbulb className="h-5 w-5 text-primary-dark" />
+        <h2 className="text-lg font-semibold">Your Tutor Noticed</h2>
+      </div>
+      <div className="space-y-3">
+        {topInsights.map(insight => (
+          <div key={insight.id} className="flex items-start gap-3 rounded-xl surface-low p-4">
+            <span className={`shrink-0 mt-0.5 h-2 w-2 rounded-full ${
+              insight.insight_type === 'strength' ? 'bg-primary' :
+              insight.insight_type === 'misconception' ? 'bg-destructive' :
+              'bg-secondary'
+            }`} />
+            <p className="text-sm flex-1">{insight.content}</p>
+            <button
+              onClick={() => dismiss.mutate(insight.id)}
+              className="shrink-0 text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ActivitySection() {
+  const { data: activity } = useActivityHistory(30);
+  if (!activity?.length) return null;
+
+  return (
+    <section className="rounded-2xl bg-card shadow-ambient p-6">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-lg font-semibold">Recent Activity</h2>
+        <Link href="/progress" className="text-sm text-primary-dark hover:underline">
+          View all
+        </Link>
+      </div>
+      <div className="overflow-x-auto">
+        <StreakCalendar activity={activity} days={30} />
+      </div>
+    </section>
   );
 }

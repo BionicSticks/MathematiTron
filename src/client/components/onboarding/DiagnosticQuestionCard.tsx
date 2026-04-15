@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SkipForward } from 'lucide-react';
 import { MathBlock } from '../chat/MathBlock';
+import { MathInput } from '../ui/MathInput';
 import type { DiagnosticQuestion } from '../../../types/api';
 
 interface DiagnosticQuestionCardProps {
@@ -93,6 +94,17 @@ export function DiagnosticQuestionCard({ question, onAnswer, isLoading }: Diagno
                 );
               })}
             </div>
+          ) : question.questionType === 'math_expression' ? (
+            <div className="mb-8">
+              <MathInput
+                value={textAnswer}
+                onChange={useCallback((val: string) => setTextAnswer(val), [])}
+                onSubmit={hasAnswer && !isLoading ? handleSubmit : undefined}
+                disabled={isLoading}
+                placeholder="Type your answer — use the keyboard for fractions, exponents, etc."
+                autoFocus
+              />
+            </div>
           ) : (
             <div className="mb-8">
               <input
@@ -102,17 +114,9 @@ export function DiagnosticQuestionCard({ question, onAnswer, isLoading }: Diagno
                 onKeyDown={e => { if (e.key === 'Enter' && hasAnswer && !isLoading) handleSubmit(); }}
                 disabled={isLoading}
                 className="w-full rounded-xl surface-low px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-shadow"
-                placeholder={question.questionType === 'math_expression'
-                  ? 'Type your answer (e.g. x^2 + 3x - 1 or use LaTeX)'
-                  : 'Type your answer...'}
+                placeholder="Type your answer..."
                 autoFocus
               />
-              {question.questionType === 'math_expression' && textAnswer.trim() && (
-                <div className="mt-3 rounded-xl surface-low px-4 py-3 text-sm">
-                  <span className="text-xs text-muted-foreground block mb-1">Preview:</span>
-                  <MathBlock content={`$${textAnswer}$`} />
-                </div>
-              )}
             </div>
           )}
 

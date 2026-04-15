@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { createServer } from 'http';
 import { loadCurriculum } from './services/curriculum/graph';
+import { initProblemBank } from './services/problems/bank';
 import { errorHandler } from './middleware/errorHandler';
 import authRoutes from './routes/auth';
 import curriculumRoutes from './routes/curriculum';
@@ -10,6 +11,8 @@ import progressRoutes from './routes/progress';
 import conversationRoutes from './routes/conversations';
 import onboardingRoutes from './routes/onboarding';
 import practiceRoutes from './routes/practice';
+import insightsRoutes from './routes/insights';
+import settingsRoutes from './routes/settings';
 
 const app = express();
 const PORT = parseInt(process.env.PORT ?? '3000');
@@ -26,6 +29,8 @@ app.use('/api/progress', progressRoutes);
 app.use('/api/conversations', conversationRoutes);
 app.use('/api/onboarding', onboardingRoutes);
 app.use('/api/practice', practiceRoutes);
+app.use('/api/insights', insightsRoutes);
+app.use('/api/settings', settingsRoutes);
 
 // Health check
 app.get('/api/health', (_req, res) => {
@@ -36,8 +41,9 @@ app.get('/api/health', (_req, res) => {
 app.use(errorHandler);
 
 async function startServer() {
-  // Load curriculum graph into memory
+  // Load curriculum graph and problem bank into memory
   await loadCurriculum();
+  await initProblemBank();
 
   if (process.env.NODE_ENV !== 'production') {
     // In development, set up Vite middleware

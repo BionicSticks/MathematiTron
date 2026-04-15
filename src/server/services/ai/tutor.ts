@@ -8,6 +8,7 @@ import { getAllMastery, getMastery } from '../../db/queries/mastery';
 import { getInsights } from '../../db/queries/insights';
 import { getMessages, saveMessage } from '../../db/queries/conversations';
 import { getConcept, getPrerequisitesFor } from '../curriculum/graph';
+import { maybeExtractInsights } from './insightExtractor';
 
 /**
  * Stream a tutor response via SSE.
@@ -125,6 +126,13 @@ export async function streamTutorResponse(
 
     sendSSE(res, 'done', { message_id: assistantMessage.id });
     res.end();
+
+    // Background insight extraction (fire-and-forget, every 5th message)
+    maybeExtractInsights(
+      conversation.id,
+      userId,
+      conversation.primary_concept_id,
+    ).catch(() => {});
   } catch (error: any) {
     console.error('Tutor streaming error:', error?.message ?? error, error?.status, JSON.stringify(error?.error ?? ''));
     sendSSE(res, 'error', { error: `Failed to generate response: ${error?.message ?? 'unknown'}` });

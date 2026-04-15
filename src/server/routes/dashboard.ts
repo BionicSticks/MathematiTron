@@ -5,12 +5,16 @@ import { getRecentActivity, calculateStreak } from '../db/queries/activity';
 import { getActiveLearningPath } from '../db/queries/learningPaths';
 import { getAllConcepts, getConcept } from '../services/curriculum/graph';
 import { isConceptLocked } from '../services/curriculum/prerequisites';
+import { applyTimeDecay } from '../services/mastery/timeDecay';
 import type { ConceptWithMastery } from '../../types/api';
 
 const router = Router();
 
 router.get('/', requireAuth, async (req, res) => {
   const userId = req.userId!;
+
+  // Apply time decay on dashboard load (idempotent, won't re-decay within 7 days)
+  applyTimeDecay(userId).catch(() => {});
 
   const [allMastery, masteredCount, recentActivity, streak, learningPath] = await Promise.all([
     getAllMastery(userId),
@@ -23,11 +27,10 @@ router.get('/', requireAuth, async (req, res) => {
   const allConcepts = getAllConcepts();
   const masteryMap = new Map(allMastery.map(m => [m.concept_id, m]));
 
-  // Calculate overall mastery (average of all attempted concepts)
-  const attemptedMastery = allMastery.filter(m => m.total_attempts > 0);
-  const overallMastery = attemptedMastery.length > 0
-    ? attemptedMastery.reduce((sum, m) => sum + m.mastery_level, 0) / attemptedMastery.length
-    : 0;
+  // Calculate overall mastery (average across ALL concepts, not just attempted)
+  const totalConcepts = allConcepts.length;
+  const masterySum = allMastery.reduce((sum, m) => sum + m.mastery_level, 0);
+  const overallMastery = totalConcepts > 0 ? masterySum / totalConcepts : 0;
 
   // Total time from recent activity
   const totalTimeMinutes = recentActivity.reduce((sum, a) => sum + a.total_time_seconds, 0) / 60;

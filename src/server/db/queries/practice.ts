@@ -84,6 +84,28 @@ export async function getPracticeProblem(problemId: string): Promise<PracticePro
   return data;
 }
 
+/**
+ * Close abandoned sessions — any session older than 2 hours without a completed_at.
+ * Called when starting a new session to clean up stale state.
+ */
+export async function closeAbandonedSessions(userId: string): Promise<number> {
+  const cutoff = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
+
+  const { data, error } = await supabaseAdmin
+    .from('practice_sessions')
+    .update({ completed_at: new Date().toISOString() })
+    .eq('user_id', userId)
+    .is('completed_at', null)
+    .lt('started_at', cutoff)
+    .select('id');
+
+  if (error) {
+    console.error('Failed to close abandoned sessions:', error);
+    return 0;
+  }
+  return data?.length ?? 0;
+}
+
 export async function updatePracticeProblem(
   problemId: string,
   updates: Partial<Pick<PracticeProblem, 'user_answer' | 'is_correct' | 'time_spent_seconds' | 'attempted_at'>>
