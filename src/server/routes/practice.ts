@@ -1,29 +1,81 @@
+import { randomUUID } from 'crypto';
 import { Router } from 'express';
 import { requireAuth } from '../middleware/auth';
 import { getAllMastery, getMastery, upsertMastery } from '../db/queries/mastery';
-import { createPracticeSession, getPracticeSession, updatePracticeSession, savePracticeProblem, getPracticeProblem, updatePracticeProblem } from '../db/queries/practice';
+import { createPracticeSession, getPracticeSession, updatePracticeSession, savePracticeProblem, getPracticeProblem, updatePracticeProblem, closeAbandonedSessions } from '../db/queries/practice';
 import { upsertDailyActivity } from '../db/queries/activity';
 import { getActiveLearningPath } from '../db/queries/learningPaths';
 import { getAllConcepts, getConcept, getPrerequisitesFor } from '../services/curriculum/graph';
 import { isConceptLocked } from '../services/curriculum/prerequisites';
 import { calculateMasteryUpdate, selectNextDifficulty, checkAnswer } from '../services/mastery/calculator';
 import { generateProblem } from '../services/ai/practice';
-import { generateProblemMock } from '../services/ai/practiceMock';
+import { getStaticProblem } from '../services/problems/bank';
+import { getRandomStaticProblem } from '../db/queries/staticProblems';
 import type { ConceptWithMastery } from '../../types/api';
 
 const router = Router();
 
 const useAI = process.env.USE_AI === 'true';
-const generateProblemFn = useAI ? generateProblem : async (
-  conceptId: string,
-  _conceptName: string,
-  _conceptDescription: string,
-  difficulty: number,
-  _masteryLevel: number,
-  previousProblems?: string[],
-) => generateProblemMock(conceptId, difficulty, previousProblems);
 
-if (!useAI) console.log('Practice: using mock AI (set USE_AI=true to use real API)');
+/**
+ * Problem generation strategy (tiered fallback):
+ * 1. If USE_AI=true → AI generates fresh, personalised problems
+ * 2. Supabase static_problem_bank → large DB of pre-generated problems
+ * 3. In-memory problem pools → bundled hand-written problems
+ * 4. Last resort → basic arithmetic (shouldn't happen with full bank)
+ */
+async function generateProblemFn(
+  conceptId: string,
+  conceptName: string,
+  conceptDescription: string,
+  difficulty: number,
+  masteryLevel: number,
+  previousProblems?: string[],
+) {
+  // Try AI first if enabled
+  if (useAI) {
+    try {
+      return await generateProblem(conceptId, conceptName, conceptDescription, difficulty, masteryLevel, previousProblems);
+    } catch (err) {
+      console.warn('AI problem generation failed, falling back to static bank:', (err as Error).message);
+    }
+  }
+
+  // Try Supabase static bank (largest pool)
+  try {
+    const dbProblem = await getRandomStaticProblem(conceptId, difficulty);
+    if (dbProblem) {
+      return {
+        id: dbProblem.id,
+        problem_text: dbProblem.problem_text,
+        hints: dbProblem.hints,
+        difficulty: dbProblem.difficulty,
+        correct_answer: dbProblem.correct_answer,
+        explanation: dbProblem.explanation,
+      };
+    }
+  } catch {
+    // DB unavailable, fall through
+  }
+
+  // In-memory problem pools (bundled fallback)
+  const staticProblem = getStaticProblem(conceptId, difficulty, previousProblems);
+  if (staticProblem) return staticProblem;
+
+  // Last resort
+  const a = Math.floor(Math.random() * 20) + 2;
+  const b = Math.floor(Math.random() * 12) + 2;
+  return {
+    id: randomUUID(),
+    problem_text: `What is $${a} \\times ${b}$?`,
+    correct_answer: String(a * b),
+    explanation: `$${a} \\times ${b} = ${a * b}$`,
+    hints: ['Try breaking one number into simpler parts.', `Think of $${a} \\times ${b}$ step by step.`, `The answer is ${a * b}.`],
+    difficulty,
+  };
+}
+
+if (!useAI) console.log('Practice: using static problem bank (set USE_AI=true for AI-generated problems)');
 
 // Get concepts available for practice
 router.get('/concepts', requireAuth, async (req, res) => {
@@ -55,6 +107,9 @@ router.get('/concepts', requireAuth, async (req, res) => {
 // Start a practice session
 router.post('/session/start', requireAuth, async (req, res) => {
   try {
+    // Clean up any abandoned sessions first
+    closeAbandonedSessions(req.userId!).catch(() => {});
+
     const { conceptId } = req.body;
     if (!conceptId) return res.status(400).json({ error: 'conceptId is required' });
 

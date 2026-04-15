@@ -8,6 +8,7 @@ export interface Profile {
   updated_at: string;
   onboarding_status: 'new' | 'goal_set' | 'diagnostic_started' | 'diagnostic_complete' | 'active';
   timezone: string;
+  subscription_tier: 'free' | 'student' | 'family';
 }
 
 export interface StudentGoal {
@@ -122,6 +123,20 @@ export interface PracticeProblem {
   time_spent_seconds: number | null;
   attempted_at: string | null;
   created_at: string;
+}
+
+export interface StaticBankProblem {
+  id: string;
+  concept_id: string;
+  problem_text: string;
+  correct_answer: string;
+  explanation: string;
+  hints: string[];
+  difficulty: number;
+  tags: string[];
+  created_at: string;
+  source: 'manual' | 'ai_batch' | 'ai_realtime';
+  quality_score: number;
 }
 
 export interface DailyActivity {

@@ -1,0 +1,441 @@
+import type { StaticProblem } from '../bank';
+
+export const TRIGONOMETRY_PROBLEMS: Record<string, StaticProblem[]> = {
+  'trig-02': [
+    {
+      problem_text: 'Convert $120°$ to radians. Give your answer as a fraction of $\\pi$.',
+      correct_answer: '2pi/3',
+      explanation: 'To convert degrees to radians, multiply by $\\frac{\\pi}{180°}$. So $120° \\times \\frac{\\pi}{180°} = \\frac{120\\pi}{180} = \\frac{2\\pi}{3}$.',
+      hints: [
+        'To convert from degrees to radians, you multiply by a conversion factor involving $\\pi$ and $180°$.',
+        'The conversion factor is $\\frac{\\pi}{180°}$. Multiply: $120° \\times \\frac{\\pi}{180°}$.',
+        'Simplify: $\\frac{120\\pi}{180} = \\frac{2\\pi}{3}$.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'What is $\\cos\\left(\\frac{\\pi}{3}\\right)$?',
+      correct_answer: '1/2',
+      explanation: '$\\frac{\\pi}{3}$ radians is $60°$. On the unit circle, the point at $60°$ is $\\left(\\frac{1}{2}, \\frac{\\sqrt{3}}{2}\\right)$, so $\\cos\\left(\\frac{\\pi}{3}\\right) = \\frac{1}{2}$.',
+      hints: [
+        'First convert $\\frac{\\pi}{3}$ radians to degrees to recognise the standard angle.',
+        '$\\frac{\\pi}{3}$ radians $= 60°$. This is one of the standard angles you should memorise.',
+        'The coordinates at $60°$ on the unit circle are $\\left(\\frac{1}{2}, \\frac{\\sqrt{3}}{2}\\right)$. Cosine gives the $x$-coordinate.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'What are the coordinates of the point on the unit circle at angle $\\frac{3\\pi}{4}$? Give your answer as $(x, y)$.',
+      correct_answer: '(-sqrt(2)/2, sqrt(2)/2)',
+      explanation: '$\\frac{3\\pi}{4}$ radians $= 135°$, which is in Quadrant II. The reference angle is $45°$. The coordinates at $45°$ are $\\left(\\frac{\\sqrt{2}}{2}, \\frac{\\sqrt{2}}{2}\\right)$. In Quadrant II, $x$ is negative: $\\left(-\\frac{\\sqrt{2}}{2}, \\frac{\\sqrt{2}}{2}\\right)$.',
+      hints: [
+        'Convert to degrees: $\\frac{3\\pi}{4} = 135°$. Which quadrant is this in?',
+        '$135°$ is in Quadrant II. Find the reference angle: $180° - 135° = 45°$. Use the coordinates for $45°$.',
+        'At $45°$ the coordinates are $\\left(\\frac{\\sqrt{2}}{2}, \\frac{\\sqrt{2}}{2}\\right)$. In Quadrant II, cosine is negative: $\\left(-\\frac{\\sqrt{2}}{2}, \\frac{\\sqrt{2}}{2}\\right)$.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'What is $\\sin\\left(\\frac{5\\pi}{6}\\right)$?',
+      correct_answer: '1/2',
+      explanation: '$\\frac{5\\pi}{6}$ radians $= 150°$, in Quadrant II. The reference angle is $180° - 150° = 30°$. Since $\\sin(30°) = \\frac{1}{2}$ and sine is positive in Quadrant II, $\\sin\\left(\\frac{5\\pi}{6}\\right) = \\frac{1}{2}$.',
+      hints: [
+        'Convert to degrees: $\\frac{5\\pi}{6} = 150°$. Identify the quadrant and reference angle.',
+        'The reference angle is $180° - 150° = 30°$. Recall that $\\sin(30°) = \\frac{1}{2}$.',
+        'In Quadrant II, sine is positive (only sine and cosecant are positive there). So $\\sin(150°) = \\frac{1}{2}$.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'Convert $\\frac{7\\pi}{6}$ radians to degrees.',
+      correct_answer: '210',
+      explanation: 'To convert radians to degrees, multiply by $\\frac{180°}{\\pi}$. So $\\frac{7\\pi}{6} \\times \\frac{180°}{\\pi} = \\frac{7 \\times 180°}{6} = \\frac{1260°}{6} = 210°$.',
+      hints: [
+        'To convert from radians to degrees, multiply by a conversion factor involving $180°$ and $\\pi$.',
+        'The conversion factor is $\\frac{180°}{\\pi}$. The $\\pi$ cancels out.',
+        'Calculate $\\frac{7 \\times 180}{6} = \\frac{1260}{6} = 210°$.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'Convert $45°$ to radians. Give your answer as a fraction of $\\pi$.',
+      correct_answer: 'pi/4',
+      explanation: '$45° \\times \\frac{\\pi}{180°} = \\frac{45\\pi}{180} = \\frac{\\pi}{4}$.',
+      hints: [
+        'Multiply the degree measure by $\\frac{\\pi}{180°}$.',
+        '$45° \\times \\frac{\\pi}{180°} = \\frac{45\\pi}{180}$.',
+        'Simplify: $\\frac{45}{180} = \\frac{1}{4}$, so the answer is $\\frac{\\pi}{4}$.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'What is $\\tan\\left(\\frac{\\pi}{4}\\right)$?',
+      correct_answer: '1',
+      explanation: '$\\frac{\\pi}{4} = 45°$. At $45°$ on the unit circle, $\\sin = \\cos = \\frac{\\sqrt{2}}{2}$, so $\\tan(45°) = \\frac{\\sin(45°)}{\\cos(45°)} = 1$.',
+      hints: [
+        'Convert $\\frac{\\pi}{4}$ to degrees: this is $45°$.',
+        'At $45°$, sine and cosine are equal.',
+        '$\\tan = \\frac{\\sin}{\\cos}$. Since both are equal, $\\tan(45°) = 1$.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'Convert $\\frac{5\\pi}{4}$ radians to degrees.',
+      correct_answer: '225',
+      explanation: '$\\frac{5\\pi}{4} \\times \\frac{180°}{\\pi} = \\frac{5 \\times 180°}{4} = \\frac{900°}{4} = 225°$.',
+      hints: [
+        'Multiply by $\\frac{180°}{\\pi}$ to convert radians to degrees.',
+        '$\\frac{5 \\times 180}{4} = \\frac{900}{4}$.',
+        '$\\frac{900}{4} = 225°$.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'What is $\\cos\\left(\\frac{2\\pi}{3}\\right)$?',
+      correct_answer: '-1/2',
+      explanation: '$\\frac{2\\pi}{3} = 120°$, which is in Quadrant II. The reference angle is $60°$. $\\cos(60°) = \\frac{1}{2}$, but cosine is negative in Quadrant II, so $\\cos(120°) = -\\frac{1}{2}$.',
+      hints: [
+        'Convert to degrees: $\\frac{2\\pi}{3} = 120°$. Which quadrant is this?',
+        'Quadrant II. The reference angle is $180° - 120° = 60°$.',
+        'Cosine is negative in Quadrant II, so $\\cos(120°) = -\\cos(60°) = -\\frac{1}{2}$.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'Convert $300°$ to radians. Give your answer as a fraction of $\\pi$.',
+      correct_answer: '5pi/3',
+      explanation: '$300° \\times \\frac{\\pi}{180°} = \\frac{300\\pi}{180} = \\frac{5\\pi}{3}$.',
+      hints: [
+        'Multiply by $\\frac{\\pi}{180°}$.',
+        '$\\frac{300\\pi}{180}$. Simplify by dividing numerator and denominator by $60$.',
+        '$\\frac{300}{180} = \\frac{5}{3}$, so the answer is $\\frac{5\\pi}{3}$.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'What is $\\sin\\left(\\frac{7\\pi}{6}\\right)$?',
+      correct_answer: '-1/2',
+      explanation: '$\\frac{7\\pi}{6} = 210°$, which is in Quadrant III. The reference angle is $210° - 180° = 30°$. $\\sin(30°) = \\frac{1}{2}$, and sine is negative in Quadrant III, so $\\sin(210°) = -\\frac{1}{2}$.',
+      hints: [
+        'Convert to degrees: $\\frac{7\\pi}{6} = 210°$. Identify the quadrant.',
+        'Quadrant III. The reference angle is $210° - 180° = 30°$.',
+        'Sine is negative in Quadrant III: $\\sin(210°) = -\\sin(30°) = -\\frac{1}{2}$.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'What is $\\tan\\left(\\frac{\\pi}{6}\\right)$? Give your answer in simplified radical form.',
+      correct_answer: 'sqrt(3)/3',
+      explanation: '$\\frac{\\pi}{6} = 30°$. $\\tan(30°) = \\frac{\\sin(30°)}{\\cos(30°)} = \\frac{1/2}{\\sqrt{3}/2} = \\frac{1}{\\sqrt{3}} = \\frac{\\sqrt{3}}{3}$.',
+      hints: [
+        '$\\frac{\\pi}{6} = 30°$. Recall the sine and cosine values at $30°$.',
+        '$\\sin(30°) = \\frac{1}{2}$ and $\\cos(30°) = \\frac{\\sqrt{3}}{2}$. Use $\\tan = \\frac{\\sin}{\\cos}$.',
+        '$\\tan(30°) = \\frac{1/2}{\\sqrt{3}/2} = \\frac{1}{\\sqrt{3}} = \\frac{\\sqrt{3}}{3}$.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'What is $\\cos(\\pi)$?',
+      correct_answer: '-1',
+      explanation: '$\\pi$ radians $= 180°$. The point on the unit circle at $180°$ is $(-1, 0)$. So $\\cos(\\pi) = -1$.',
+      hints: [
+        'Convert to degrees: $\\pi = 180°$.',
+        'The point at $180°$ on the unit circle lies on the negative $x$-axis.',
+        'The coordinates are $(-1, 0)$, so $\\cos(\\pi) = -1$.',
+      ],
+      difficulty: 7,
+    },
+  ],
+
+  'trig-03': [
+    {
+      problem_text: 'What is the amplitude of the function $y = 3\\sin(x)$?',
+      correct_answer: '3',
+      explanation: 'For $y = A\\sin(Bx + C) + D$, the amplitude is $|A|$. Here $A = 3$, so the amplitude is $3$.',
+      hints: [
+        'The amplitude controls how tall the wave is — it is the coefficient in front of the trig function.',
+        'In the general form $y = A\\sin(Bx + C) + D$, amplitude $= |A|$.',
+        'Here $A = 3$, so the amplitude is $|3| = 3$.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'What is the period of the function $y = \\sin(2x)$? Give your answer in terms of $\\pi$.',
+      correct_answer: 'pi',
+      explanation: 'For $y = \\sin(Bx)$, the period is $\\frac{2\\pi}{|B|}$. Here $B = 2$, so the period is $\\frac{2\\pi}{2} = \\pi$.',
+      hints: [
+        'The period tells you how long it takes for the function to complete one full cycle.',
+        'The period formula is $\\frac{2\\pi}{|B|}$ where $B$ is the coefficient of $x$.',
+        'Here $B = 2$: period $= \\frac{2\\pi}{2} = \\pi$.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'What is the phase shift of $y = \\cos\\left(x - \\frac{\\pi}{4}\\right)$? State the direction.',
+      correct_answer: 'pi/4 right',
+      explanation: 'For $y = \\cos(x - C)$, the graph shifts right by $C$. Here $C = \\frac{\\pi}{4}$, so the phase shift is $\\frac{\\pi}{4}$ units to the right.',
+      hints: [
+        'A phase shift moves the graph horizontally. Look at what is being subtracted from (or added to) $x$.',
+        'In $y = \\cos(x - C)$, the subtraction of $C$ shifts the graph to the right.',
+        'Here $C = \\frac{\\pi}{4}$, so the graph shifts $\\frac{\\pi}{4}$ units to the right.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'For the function $y = -2\\cos(3x) + 1$, what is the maximum value?',
+      correct_answer: '3',
+      explanation: 'The standard $\\cos$ ranges from $-1$ to $1$. Multiplying by $-2$ gives a range of $-2$ to $2$. Adding $1$ shifts it to $-1$ to $3$. The maximum value is $3$.',
+      hints: [
+        'Start with the range of $\\cos(3x)$, which is $[-1, 1]$, then apply each transformation.',
+        'Multiplying by $-2$ flips and stretches: the range becomes $[-2, 2]$.',
+        'Adding $1$ shifts everything up: range becomes $[-1, 3]$. The maximum is $3$.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'The function $y = 4\\sin\\left(\\frac{x}{2}\\right)$ has what period? Give your answer in terms of $\\pi$.',
+      correct_answer: '4pi',
+      explanation: 'The period of $y = A\\sin(Bx)$ is $\\frac{2\\pi}{|B|}$. Here $B = \\frac{1}{2}$, so the period is $\\frac{2\\pi}{1/2} = 4\\pi$.',
+      hints: [
+        'Identify the coefficient $B$ of $x$ inside the sine function.',
+        'Here $B = \\frac{1}{2}$. Use the period formula: $\\frac{2\\pi}{|B|}$.',
+        'Period $= \\frac{2\\pi}{1/2} = 2\\pi \\times 2 = 4\\pi$.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'What is the amplitude of $y = -5\\cos(x)$?',
+      correct_answer: '5',
+      explanation: 'The amplitude is $|A|$. Here $A = -5$, so the amplitude is $|-5| = 5$. The negative sign reflects the graph but does not affect amplitude.',
+      hints: [
+        'Amplitude is always positive — it measures the distance from the midline to a peak.',
+        'Take the absolute value of the coefficient in front of $\\cos(x)$.',
+        '$|{-5}| = 5$.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'What is the vertical shift (midline) of the function $y = 2\\sin(x) + 3$?',
+      correct_answer: '3',
+      explanation: 'In $y = A\\sin(Bx + C) + D$, the vertical shift is $D$. Here $D = 3$, so the midline is $y = 3$.',
+      hints: [
+        'The vertical shift is the constant added outside the trig function.',
+        'In the general form $y = A\\sin(Bx + C) + D$, the midline is $y = D$.',
+        'Here $D = 3$, so the midline is at $y = 3$.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'What is the period of $y = \\cos(4x)$? Give your answer in terms of $\\pi$.',
+      correct_answer: 'pi/2',
+      explanation: 'The period is $\\frac{2\\pi}{|B|} = \\frac{2\\pi}{4} = \\frac{\\pi}{2}$.',
+      hints: [
+        'Identify $B = 4$ from the argument of cosine.',
+        'Use the formula: period $= \\frac{2\\pi}{|B|}$.',
+        '$\\frac{2\\pi}{4} = \\frac{\\pi}{2}$.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'For $y = 3\\sin(2x) - 1$, what is the minimum value?',
+      correct_answer: '-4',
+      explanation: 'The range of $\\sin(2x)$ is $[-1, 1]$. Multiplying by $3$ gives $[-3, 3]$. Subtracting $1$ gives $[-4, 2]$. The minimum is $-4$.',
+      hints: [
+        'Start with the range of $\\sin(2x)$: $[-1, 1]$.',
+        'Multiply by $3$: range becomes $[-3, 3]$.',
+        'Subtract $1$: range becomes $[-4, 2]$. The minimum is $-4$.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'What is the phase shift of $y = \\sin\\left(x + \\frac{\\pi}{3}\\right)$? State the direction.',
+      correct_answer: 'pi/3 left',
+      explanation: 'For $y = \\sin(x + C)$, the addition of $C$ shifts the graph left by $C$. Here $C = \\frac{\\pi}{3}$, so the phase shift is $\\frac{\\pi}{3}$ to the left.',
+      hints: [
+        'Adding a positive value inside the function shifts the graph horizontally.',
+        'In $y = \\sin(x + C)$, the graph shifts left by $C$.',
+        'The phase shift is $\\frac{\\pi}{3}$ to the left.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'What is the period of $y = \\tan(x)$? Give your answer in terms of $\\pi$.',
+      correct_answer: 'pi',
+      explanation: 'The standard tangent function has a period of $\\pi$, unlike sine and cosine which have a period of $2\\pi$.',
+      hints: [
+        'The tangent function repeats more frequently than sine and cosine.',
+        'Recall that $\\tan(x)$ has vertical asymptotes at $x = \\frac{\\pi}{2} + n\\pi$.',
+        'The period of $\\tan(x)$ is $\\pi$.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'For the function $y = \\frac{1}{2}\\cos(3x) + 4$, what is the range? Give as two numbers separated by a comma (min, max).',
+      correct_answer: '3.5, 4.5',
+      explanation: '$\\cos(3x)$ ranges from $-1$ to $1$. Multiplying by $\\frac{1}{2}$ gives $[-\\frac{1}{2}, \\frac{1}{2}]$. Adding $4$ gives $[3.5, 4.5]$.',
+      hints: [
+        'Start with the range of $\\cos(3x)$: $[-1, 1]$.',
+        'Multiply by $\\frac{1}{2}$: range becomes $[-0.5, 0.5]$.',
+        'Add $4$: range becomes $[3.5, 4.5]$.',
+      ],
+      difficulty: 7,
+    },
+    {
+      problem_text: 'What is the period of $y = \\sin\\left(\\frac{2x}{3}\\right)$? Give your answer in terms of $\\pi$.',
+      correct_answer: '3pi',
+      explanation: 'Here $B = \\frac{2}{3}$. Period $= \\frac{2\\pi}{|B|} = \\frac{2\\pi}{2/3} = 2\\pi \\times \\frac{3}{2} = 3\\pi$.',
+      hints: [
+        'Identify $B = \\frac{2}{3}$ from $\\sin\\left(\\frac{2}{3}x\\right)$.',
+        'Period $= \\frac{2\\pi}{|B|} = \\frac{2\\pi}{2/3}$.',
+        '$\\frac{2\\pi}{2/3} = 2\\pi \\times \\frac{3}{2} = 3\\pi$.',
+      ],
+      difficulty: 7,
+    },
+  ],
+
+  'trig-04': [
+    {
+      problem_text: 'Simplify $\\sin^2(x) + \\cos^2(x)$.',
+      correct_answer: '1',
+      explanation: 'This is the fundamental Pythagorean identity: $\\sin^2(x) + \\cos^2(x) = 1$ for all values of $x$.',
+      hints: [
+        'This is one of the most fundamental identities in trigonometry.',
+        'Think about a right triangle on the unit circle with hypotenuse $1$.',
+        'The Pythagorean identity states $\\sin^2(x) + \\cos^2(x) = 1$.',
+      ],
+      difficulty: 8,
+    },
+    {
+      problem_text: 'Use the double angle formula to express $\\sin(2\\theta)$ in terms of $\\sin(\\theta)$ and $\\cos(\\theta)$. If $\\sin(\\theta) = \\frac{3}{5}$ and $\\cos(\\theta) = \\frac{4}{5}$, find $\\sin(2\\theta)$.',
+      correct_answer: '24/25',
+      explanation: 'The double angle formula states $\\sin(2\\theta) = 2\\sin(\\theta)\\cos(\\theta)$. Substituting: $\\sin(2\\theta) = 2 \\times \\frac{3}{5} \\times \\frac{4}{5} = \\frac{24}{25}$.',
+      hints: [
+        'The double angle formula for sine expresses $\\sin(2\\theta)$ as a product involving $\\sin(\\theta)$ and $\\cos(\\theta)$.',
+        'The formula is $\\sin(2\\theta) = 2\\sin(\\theta)\\cos(\\theta)$.',
+        'Substitute: $\\sin(2\\theta) = 2 \\times \\frac{3}{5} \\times \\frac{4}{5} = \\frac{24}{25}$.',
+      ],
+      difficulty: 8,
+    },
+    {
+      problem_text: 'Simplify $\\frac{1 - \\cos^2(x)}{\\sin(x)}$.',
+      correct_answer: 'sin(x)',
+      explanation: 'Using the Pythagorean identity, $1 - \\cos^2(x) = \\sin^2(x)$. So $\\frac{\\sin^2(x)}{\\sin(x)} = \\sin(x)$.',
+      hints: [
+        'Look at the numerator: $1 - \\cos^2(x)$. Can you replace this using a well-known identity?',
+        'By the Pythagorean identity, $1 - \\cos^2(x) = \\sin^2(x)$.',
+        'Now simplify: $\\frac{\\sin^2(x)}{\\sin(x)} = \\sin(x)$.',
+      ],
+      difficulty: 8,
+    },
+    {
+      problem_text: 'If $\\cos(\\theta) = \\frac{3}{5}$ and $\\theta$ is in Quadrant I, find $\\cos(2\\theta)$.',
+      correct_answer: '-7/25',
+      explanation: 'Using the double angle formula $\\cos(2\\theta) = 2\\cos^2(\\theta) - 1 = 2 \\times \\left(\\frac{3}{5}\\right)^2 - 1 = 2 \\times \\frac{9}{25} - 1 = \\frac{18}{25} - 1 = -\\frac{7}{25}$.',
+      hints: [
+        'There are three forms of the double angle formula for cosine. Choose the one that uses only $\\cos(\\theta)$.',
+        'Use $\\cos(2\\theta) = 2\\cos^2(\\theta) - 1$.',
+        'Substitute: $\\cos(2\\theta) = 2 \\times \\frac{9}{25} - 1 = \\frac{18}{25} - \\frac{25}{25} = -\\frac{7}{25}$.',
+      ],
+      difficulty: 8,
+    },
+    {
+      problem_text: 'Simplify $\\sec^2(x) - \\tan^2(x)$.',
+      correct_answer: '1',
+      explanation: 'Dividing the Pythagorean identity $\\sin^2(x) + \\cos^2(x) = 1$ by $\\cos^2(x)$ gives $\\tan^2(x) + 1 = \\sec^2(x)$. Rearranging: $\\sec^2(x) - \\tan^2(x) = 1$.',
+      hints: [
+        'This is related to a variation of the Pythagorean identity. Try dividing $\\sin^2(x) + \\cos^2(x) = 1$ by $\\cos^2(x)$.',
+        'Dividing each term by $\\cos^2(x)$: $\\tan^2(x) + 1 = \\sec^2(x)$.',
+        'Rearrange: $\\sec^2(x) - \\tan^2(x) = 1$.',
+      ],
+      difficulty: 8,
+    },
+    {
+      problem_text: 'Simplify $\\frac{\\sin(x)}{\\cos(x)}$.',
+      correct_answer: 'tan(x)',
+      explanation: 'By definition, $\\tan(x) = \\frac{\\sin(x)}{\\cos(x)}$.',
+      hints: [
+        'This ratio of sine to cosine defines one of the other trig functions.',
+        'Think about which trig function is the ratio of opposite to adjacent.',
+        '$\\frac{\\sin(x)}{\\cos(x)} = \\tan(x)$.',
+      ],
+      difficulty: 8,
+    },
+    {
+      problem_text: 'If $\\sin(\\theta) = \\frac{5}{13}$ and $\\theta$ is in Quadrant I, find $\\cos(\\theta)$.',
+      correct_answer: '12/13',
+      explanation: 'Using $\\sin^2(\\theta) + \\cos^2(\\theta) = 1$: $\\cos^2(\\theta) = 1 - \\frac{25}{169} = \\frac{144}{169}$. Since $\\theta$ is in Quadrant I, $\\cos(\\theta) = \\frac{12}{13}$.',
+      hints: [
+        'Use the Pythagorean identity to relate sine and cosine.',
+        '$\\cos^2(\\theta) = 1 - \\sin^2(\\theta) = 1 - \\frac{25}{169} = \\frac{144}{169}$.',
+        'In Quadrant I, cosine is positive: $\\cos(\\theta) = \\frac{12}{13}$.',
+      ],
+      difficulty: 8,
+    },
+    {
+      problem_text: 'Simplify $\\csc^2(x) - \\cot^2(x)$.',
+      correct_answer: '1',
+      explanation: 'Dividing the Pythagorean identity by $\\sin^2(x)$ gives $1 + \\cot^2(x) = \\csc^2(x)$. Rearranging: $\\csc^2(x) - \\cot^2(x) = 1$.',
+      hints: [
+        'This is another variation of the Pythagorean identity. Try dividing $\\sin^2(x) + \\cos^2(x) = 1$ by $\\sin^2(x)$.',
+        'You get $1 + \\cot^2(x) = \\csc^2(x)$.',
+        'Rearrange: $\\csc^2(x) - \\cot^2(x) = 1$.',
+      ],
+      difficulty: 8,
+    },
+    {
+      problem_text: 'Use the double angle formula to find $\\cos(2\\theta)$ if $\\sin(\\theta) = \\frac{1}{3}$. Use the form involving only sine.',
+      correct_answer: '7/9',
+      explanation: 'Using $\\cos(2\\theta) = 1 - 2\\sin^2(\\theta) = 1 - 2 \\times \\frac{1}{9} = 1 - \\frac{2}{9} = \\frac{7}{9}$.',
+      hints: [
+        'One form of the double angle formula uses only sine: $\\cos(2\\theta) = 1 - 2\\sin^2(\\theta)$.',
+        'Substitute $\\sin(\\theta) = \\frac{1}{3}$: $\\cos(2\\theta) = 1 - 2 \\times \\frac{1}{9}$.',
+        '$\\cos(2\\theta) = 1 - \\frac{2}{9} = \\frac{7}{9}$.',
+      ],
+      difficulty: 8,
+    },
+    {
+      problem_text: 'Simplify $\\frac{\\tan(x) \\cdot \\cos(x)}{\\sin(x)}$.',
+      correct_answer: '1',
+      explanation: '$\\tan(x) = \\frac{\\sin(x)}{\\cos(x)}$. So $\\frac{\\tan(x) \\cdot \\cos(x)}{\\sin(x)} = \\frac{\\frac{\\sin(x)}{\\cos(x)} \\cdot \\cos(x)}{\\sin(x)} = \\frac{\\sin(x)}{\\sin(x)} = 1$.',
+      hints: [
+        'Replace $\\tan(x)$ with its definition: $\\frac{\\sin(x)}{\\cos(x)}$.',
+        '$\\frac{\\frac{\\sin(x)}{\\cos(x)} \\cdot \\cos(x)}{\\sin(x)}$. The $\\cos(x)$ cancels.',
+        'You are left with $\\frac{\\sin(x)}{\\sin(x)} = 1$.',
+      ],
+      difficulty: 8,
+    },
+    {
+      problem_text: 'If $\\tan(\\theta) = \\frac{3}{4}$ and $\\theta$ is in Quadrant I, find $\\sin(\\theta)$.',
+      correct_answer: '3/5',
+      explanation: 'If $\\tan(\\theta) = \\frac{3}{4}$, the opposite side is $3$ and adjacent is $4$. By the Pythagorean theorem, the hypotenuse is $\\sqrt{9 + 16} = 5$. So $\\sin(\\theta) = \\frac{3}{5}$.',
+      hints: [
+        '$\\tan(\\theta) = \\frac{\\text{opposite}}{\\text{adjacent}} = \\frac{3}{4}$. Think of a right triangle.',
+        'Find the hypotenuse using the Pythagorean theorem: $\\sqrt{3^2 + 4^2} = \\sqrt{25} = 5$.',
+        '$\\sin(\\theta) = \\frac{\\text{opposite}}{\\text{hypotenuse}} = \\frac{3}{5}$.',
+      ],
+      difficulty: 8,
+    },
+    {
+      problem_text: 'Simplify $2\\sin(x)\\cos(x)$.',
+      correct_answer: 'sin(2x)',
+      explanation: 'By the double angle formula, $\\sin(2x) = 2\\sin(x)\\cos(x)$. So $2\\sin(x)\\cos(x) = \\sin(2x)$.',
+      hints: [
+        'This expression is the right-hand side of a well-known identity.',
+        'Recall the double angle formula for sine.',
+        '$2\\sin(x)\\cos(x) = \\sin(2x)$.',
+      ],
+      difficulty: 8,
+    },
+    {
+      problem_text: 'If $\\sin(\\theta) = \\frac{8}{17}$ and $\\cos(\\theta) = \\frac{15}{17}$, find $\\tan(\\theta)$.',
+      correct_answer: '8/15',
+      explanation: '$\\tan(\\theta) = \\frac{\\sin(\\theta)}{\\cos(\\theta)} = \\frac{8/17}{15/17} = \\frac{8}{15}$.',
+      hints: [
+        'Tangent is defined as the ratio of sine to cosine.',
+        '$\\tan(\\theta) = \\frac{\\sin(\\theta)}{\\cos(\\theta)} = \\frac{8/17}{15/17}$.',
+        'When dividing fractions with the same denominator, the denominators cancel: $\\frac{8}{15}$.',
+      ],
+      difficulty: 8,
+    },
+  ],
+};
